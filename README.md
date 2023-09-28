@@ -14,6 +14,10 @@ The third page is a settings page.
 - The user can choose what settings to view. In particular, which stock exchange to analyse, and other features.
 
 We will be using this API for our application:
+
 https://rapidapi.com/sparior/api/yahoo-finance15
 
-Here is a screenshot of us using #api call thing#
+We will be using Insomnia to make API Requests. Here is a screenshot of us doing so:
+
+![Insomnia API Requests](https://github.com/fionnad/best-207-project/assets/144710186/2d8a515e-de82-4847-8d5c-45d75156ddd3)
+
