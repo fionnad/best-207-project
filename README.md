@@ -24,6 +24,7 @@ We will be using Insomnia to make API Requests. Here is a screenshot of us doing
 As shown below, our current output is a JSON with information about pulled from Apple Stock. The information on Apple was pulled on Friday, 29 September, and is shown below:
 
 {
+
     "financialData": {
         "maxAge": 86400,
         "currentPrice": {
