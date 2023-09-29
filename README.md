@@ -1,6 +1,6 @@
 Algorithmic Prediction Application
 
-This Algorithmic Prediction App will focus in the domain of Finance, and it analyse companies in the New York Stock Exchange and Hong Kong Stock Exchange to predict which companies could see the highest stock price jump within an hourly, daily, weekly and monthly window.
+This Algorithmic Prediction App will focus in the domain of Finance, and it analyses companies in the New York Stock Exchange and Hong Kong Stock Exchange to predict which companies could see the highest stock price jump within an hourly, daily, weekly and monthly window.
 
 The first page of the application will be a summary page.
 - At the top, the user will be able to choose which time frame to work in (hourly, weekly, etc.).
