@@ -4,6 +4,7 @@ import okhttp3.*;
 import java.io.IOException;
 
 
+
 public class Main {
     public static void main(String[] args) throws IOException {
         OkHttpClient client = new OkHttpClient();
@@ -16,6 +17,6 @@ public class Main {
                 .build();
 
         Response response = client.newCall(request).execute();
-        System.out.println(response.body().string());
+
     }
 }
