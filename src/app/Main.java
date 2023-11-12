@@ -1,10 +1,15 @@
 package app;
 
 import interface_adapter.FirstPage.FirstPageViewModel;
+import interface_adapter.SearchCompany.SearchCompanyController;
+import interface_adapter.SearchCompany.SearchCompanyViewModel;
 import view.FirstPageView;
+import view.SearchCompanyView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class Main {
@@ -28,9 +33,32 @@ public class Main {
         // be observed by the Views.
         FirstPageViewModel firstPageViewModel = new FirstPageViewModel();
 
-        FirstPageView firstPageView = new FirstPageView(firstPageViewModel);
-        views.add(firstPageView);
+        SearchCompanyViewModel searchCompanyViewModel = new SearchCompanyViewModel();
+        SearchCompanyController searchCompanyController = SearchCompanyUseCaseFactory.create("AAPL");
 
+        FirstPageView firstPageView = new FirstPageView(firstPageViewModel);
+        SearchCompanyView searchCompanyView = new SearchCompanyView(searchCompanyViewModel, searchCompanyController);
+
+        views.add(firstPageView);
+        views.add(searchCompanyView);
+
+
+        JButton changeView = new JButton("Switch Page");
+        changeView.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed (ActionEvent e) {
+                        CardLayout cardLayout1 = (CardLayout)(views.getLayout());
+                        cardLayout1.next(views);
+            }
+        });
+        Container pane = application.getContentPane();
+        pane.add(views, BorderLayout.CENTER);
+        JPanel btnPanel = new JPanel();
+        btnPanel.add(changeView);
+        pane.add(btnPanel, BorderLayout.SOUTH);
+
+        application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         application.pack();
         application.setVisible(true);
     }
