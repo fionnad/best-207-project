@@ -32,16 +32,13 @@ public class Main {
         // results from the use case. The ViewModels are observable, and will
         // be observed by the Views.
         FirstPageViewModel firstPageViewModel = new FirstPageViewModel();
-
         SearchCompanyViewModel searchCompanyViewModel = new SearchCompanyViewModel();
-        SearchCompanyController searchCompanyController = SearchCompanyUseCaseFactory.create("AAPL");
 
         FirstPageView firstPageView = new FirstPageView(firstPageViewModel);
-        SearchCompanyView searchCompanyView = new SearchCompanyView(searchCompanyViewModel, searchCompanyController);
+        SearchCompanyView searchCompanyView = new SearchCompanyView(searchCompanyViewModel);
 
         views.add(firstPageView);
         views.add(searchCompanyView);
-
 
         JButton changeView = new JButton("Switch Page");
         changeView.addActionListener(
