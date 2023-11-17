@@ -11,9 +11,8 @@ public class SearchCompanyUseCaseFactory {
 
     private SearchCompanyUseCaseFactory() {}
 
-    public static SearchCompanyController create(String ticker)  {
-        SearchCompanyViewModel searchCompanyViewModel = new SearchCompanyViewModel();
-        SearchCompanyPresenter searchCompanyPresenter = new SearchCompanyPresenter(searchCompanyViewModel);
+    public static SearchCompanyController create(SearchCompanyViewModel currentSearchCompanyViewModel, String ticker)  {
+        SearchCompanyPresenter searchCompanyPresenter = new SearchCompanyPresenter(currentSearchCompanyViewModel);
         SearchCompanyInputBoundary searchCompanyInteractor = new SearchCompanyInteractor(ticker, searchCompanyPresenter);
         return new SearchCompanyController(searchCompanyInteractor);
     }

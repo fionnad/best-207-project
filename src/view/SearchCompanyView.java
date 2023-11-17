@@ -18,7 +18,7 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
     private final SearchCompanyViewModel searchCompanyViewModel;
     private final JTextField searchCompanyInputField = new JTextField(15);
     private final JButton searchCompanyButton;
-    private final JPanel informationPresentedPanel;
+    private JPanel informationPresentedPanel;
 
     public SearchCompanyView(SearchCompanyViewModel newSearchCompanyViewModel) {
         this.searchCompanyViewModel = newSearchCompanyViewModel;
@@ -42,7 +42,7 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
         buttonRowPanel.add(searchCompanyButton);
 
         // Information Presented Row (4th Row)
-        JLabel financialData = new JLabel(SearchCompanyViewModel.DISPLAY_INFORMATION);
+        JLabel financialData = new JLabel(this.searchCompanyViewModel.getState().getCompanyInformation());
         informationPresentedPanel.add(financialData);
 
         // Main Panel to Hold All Rows (Nested Panels)
@@ -81,7 +81,7 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(searchCompanyButton)) {
-                            SearchCompanyController searchCompanyController = SearchCompanyUseCaseFactory.create(searchCompanyViewModel.getState().getCompanyTicker());
+                            SearchCompanyController searchCompanyController = SearchCompanyUseCaseFactory.create(searchCompanyViewModel, searchCompanyViewModel.getState().getCompanyTicker());
                             searchCompanyController.execute();
                         }
                     }
@@ -97,14 +97,6 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         SearchCompanyState state = (SearchCompanyState) e.getNewValue();
-        System.out.println(state.getCompanyInformation());
-        if (!state.getCompanyInformation().equals("Nothing to show")) {
-            JLabel informationLabel = new JLabel(state.getCompanyInformation());
-            informationPresentedPanel.removeAll(); // Clear the panel before adding the new label
-            informationPresentedPanel.add(informationLabel);
-            informationPresentedPanel.revalidate(); // Refresh the panel to reflect changes
-            informationPresentedPanel.repaint();
-        }
+        JOptionPane.showMessageDialog(this, state.getCompanyInformation());
     }
 }
-

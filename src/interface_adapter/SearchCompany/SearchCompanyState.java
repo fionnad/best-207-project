@@ -23,8 +23,6 @@ public class SearchCompanyState {
     }
 
     public void setCompanyInformation(String newCompanyInformation) {
-        if (newCompanyInformation != null) {
-            this.companyInformation = newCompanyInformation;
-        }
+        this.companyInformation = newCompanyInformation;
     }
 }
