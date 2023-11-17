@@ -5,6 +5,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 import java.io.IOException;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 public class SearchCompanyDataAccessInterface {
     public String ticker;
     public String urlMain;
@@ -14,7 +18,7 @@ public class SearchCompanyDataAccessInterface {
         this.urlMain = String.format("https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/%s/financial-data", this.ticker);
     }
 
-    public String getFinData() {
+    public Object getFinData() {
         try {
             OkHttpClient client = new OkHttpClient();
 
@@ -26,9 +30,27 @@ public class SearchCompanyDataAccessInterface {
                     .build();
 
             Response response = client.newCall(request).execute();
-            return response.body().string();
+            String jsonString = response.body().string();
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(jsonString);
+
+            // quick demo on how to index through this object
+            // might be easier ways of doing it, not 100% sure
+            // say we wanted to get the current price:
+
+            // JSONObject financialData = (JSONObject)json.get("financialData");
+            // JSONObject currentPrice = (JSONObject)financialData.get("currentPrice");
+            // double currPrice = (double)currentPrice.get("raw");
+            // return currPrice;
+
+            return json.get("financialData");
+
         } catch (IOException e) {
             return "Error";
+        }
+        catch (ParseException e) {
+            throw new RuntimeException(e);
         }
     };
 }
