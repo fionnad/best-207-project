@@ -11,26 +11,51 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class SearchCompanyView extends JPanel implements ActionListener {
+public class SearchCompanyView extends JPanel implements ActionListener, PropertyChangeListener {
     private final SearchCompanyViewModel searchCompanyViewModel;
     private final JTextField searchCompanyInputField = new JTextField(15);
     private final JButton searchCompanyButton;
+    private final JPanel informationPresentedPanel;
 
     public SearchCompanyView(SearchCompanyViewModel newSearchCompanyViewModel) {
         this.searchCompanyViewModel = newSearchCompanyViewModel;
+        searchCompanyViewModel.addPropertyChangeListener(this);
+        this.informationPresentedPanel = new JPanel();
 
-        JPanel panel = new JPanel();
+        // Title Row (1st Row)
+        JPanel titleRowPanel = new JPanel();
         JLabel title = new JLabel(SearchCompanyViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        LabelTextPanel companyInfo = new LabelTextPanel(new JLabel(SearchCompanyViewModel.SEARCH_LABEL), searchCompanyInputField);
-        searchCompanyButton = new JButton("Search Company");
-        panel.add(searchCompanyButton);
+        titleRowPanel.add(title);
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(title);
-        this.add(companyInfo);
-        this.add(panel);
+        // Search Box Row (2nd Row)
+        JPanel searchRowPanel = new JPanel();
+        LabelTextPanel companyInfo = new LabelTextPanel(new JLabel(SearchCompanyViewModel.SEARCH_LABEL), searchCompanyInputField);
+        searchRowPanel.add(companyInfo);
+
+        // Search Button Row (3rd Row)
+        JPanel buttonRowPanel = new JPanel();
+        searchCompanyButton = new JButton("Search Company");
+        buttonRowPanel.add(searchCompanyButton);
+
+        // Information Presented Row (4th Row)
+        JLabel financialData = new JLabel(SearchCompanyViewModel.DISPLAY_INFORMATION);
+        informationPresentedPanel.add(financialData);
+
+        // Main Panel to Hold All Rows (Nested Panels)
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS)); // Use BoxLayout for vertical arrangement
+        mainPanel.add(titleRowPanel);
+        mainPanel.add(searchRowPanel);
+        mainPanel.add(buttonRowPanel);
+        mainPanel.add(this.informationPresentedPanel);
+
+        // Adding Main to View
+        this.setLayout(new BorderLayout());
+        this.add(mainPanel, BorderLayout.NORTH);
 
         searchCompanyInputField.addKeyListener(
                 new KeyListener() {
@@ -67,6 +92,19 @@ public class SearchCompanyView extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         ;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        SearchCompanyState state = (SearchCompanyState) e.getNewValue();
+        System.out.println(state.getCompanyInformation());
+        if (!state.getCompanyInformation().equals("Nothing to show")) {
+            JLabel informationLabel = new JLabel(state.getCompanyInformation());
+            informationPresentedPanel.removeAll(); // Clear the panel before adding the new label
+            informationPresentedPanel.add(informationLabel);
+            informationPresentedPanel.revalidate(); // Refresh the panel to reflect changes
+            informationPresentedPanel.repaint();
+        }
     }
 }
 
