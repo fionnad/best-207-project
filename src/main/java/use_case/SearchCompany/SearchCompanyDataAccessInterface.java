@@ -18,7 +18,7 @@ public class SearchCompanyDataAccessInterface {
         this.urlMain = String.format("https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/%s/financial-data", this.ticker);
     }
 
-    public Object getFinData() {
+    public String getFinData() {
         try {
             OkHttpClient client = new OkHttpClient();
 
@@ -44,7 +44,7 @@ public class SearchCompanyDataAccessInterface {
             // double currPrice = (double)currentPrice.get("raw");
             // return currPrice;
 
-            return json.get("financialData");
+            return json.get("financialData").toString();
 
         } catch (IOException e) {
             return "Error";
