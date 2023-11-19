@@ -42,7 +42,7 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
         buttonRowPanel.add(searchCompanyButton);
 
         // Information Presented Row (4th Row)
-        JLabel financialData = new JLabel(this.searchCompanyViewModel.getState().getCompanyInformation());
+        JLabel financialData = new JLabel(this.searchCompanyViewModel.getState().getCompanyFrontEndState());
         informationPresentedPanel.add(financialData);
 
         // Main Panel to Hold All Rows (Nested Panels)
@@ -97,6 +97,6 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         SearchCompanyState state = (SearchCompanyState) e.getNewValue();
-        JOptionPane.showMessageDialog(this, state.getCompanyInformation());
+        JOptionPane.showMessageDialog(this, state.getCompanyFrontEndState());
     }
 }

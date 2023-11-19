@@ -1,19 +1,22 @@
 package use_case.SearchCompany;
 
+import org.json.simple.parser.ParseException;
+
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 public class SearchCompanyInteractor implements SearchCompanyInputBoundary {
-    final String ticker;
+    final SearchCompanyDataAccessInterface searchCompanyDataAccessInterface;
     final SearchCompanyOutputBoundary searchCompanyOutputBoundary;
 
-    public SearchCompanyInteractor(String ticker, SearchCompanyOutputBoundary newSearchCompanyOutputBoundary) {
-        this.ticker = ticker;
+    public SearchCompanyInteractor(SearchCompanyDataAccessInterface searchCompanyDataAccessInterface, SearchCompanyOutputBoundary newSearchCompanyOutputBoundary) {
+        this.searchCompanyDataAccessInterface = searchCompanyDataAccessInterface;
         this.searchCompanyOutputBoundary = newSearchCompanyOutputBoundary;
     }
 
     public void execute() {
-        SearchCompanyDataAccessInterface searchCompanyDataAccessInterface = new SearchCompanyDataAccessInterface(this.ticker);
-        SearchCompanyOutputData searchCompanyOutputData = new SearchCompanyOutputData(searchCompanyDataAccessInterface.getFinData(), LocalDateTime.now(),  true);
+        HashMap<String, Object> finDataInfo = searchCompanyDataAccessInterface.getParsedFinData();
+        SearchCompanyOutputData searchCompanyOutputData = new SearchCompanyOutputData(finDataInfo, LocalDateTime.now());
         searchCompanyOutputBoundary.prepareSuccessView(searchCompanyOutputData);
     }
 
