@@ -4,12 +4,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
-
-public class ParseJsonService {
+public class StringToJsonParser {
     public final String jsonObject;
 
-    public ParseJsonService(String jsonObject) {
+    public StringToJsonParser(String jsonObject) {
         this.jsonObject = jsonObject;
     }
 

@@ -1,7 +1,7 @@
 package data_access;
 
 import entities.FinDataCuratorService;
-import entities.ParseJsonService;
+import entities.StringToJsonParser;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -45,8 +45,8 @@ public class GetYahooFinanceApiData implements SearchCompanyDataAccessInterface 
     public HashMap<String, Object> getParsedFinData() {
         try {
             String finData = this.getFinData();
-            ParseJsonService parseJsonService = new ParseJsonService(finData);
-            JSONObject finJSONObject = parseJsonService.parseJson();
+            StringToJsonParser stringToJsonParser = new StringToJsonParser(finData);
+            JSONObject finJSONObject = stringToJsonParser.parseJson();
             FinDataCuratorService finDataCuratorService = new FinDataCuratorService(finJSONObject);
             return finDataCuratorService.retrieveFinData();
         } catch (ParseException e) {

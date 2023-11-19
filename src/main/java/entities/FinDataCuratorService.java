@@ -4,6 +4,7 @@ import entities.FinDataCurators.EbitdaMarginCurator;
 import entities.FinDataCurators.DebtToEquityCurator;
 import org.json.simple.JSONObject;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class FinDataCuratorService {
@@ -19,12 +20,13 @@ public class FinDataCuratorService {
             finDataHashMap.put("containsErrorCheck", true);
         } else {
             JSONObject finJsonData = (JSONObject) this.finJson.get("financialData");
-            EbitdaMarginCurator ebitdaMarginCurator = new EbitdaMarginCurator((JSONObject) finJsonData.get("ebitdaMargins"));
-            DebtToEquityCurator debtToEquityCurator = new DebtToEquityCurator((JSONObject) finJsonData.get("debtToEquity"));
+            EbitdaMarginCurator ebitdaMarginCurator = new EbitdaMarginCurator(finJsonData.get("ebitdaMargins"));
+            DebtToEquityCurator debtToEquityCurator = new DebtToEquityCurator(finJsonData.get("debtToEquity"));
 
             finDataHashMap.put("containsErrorCheck", false);
+            finDataHashMap.put("companyDataFetchTime", LocalDateTime.now().toString());
             finDataHashMap.put("companyEbitdaMargin", ebitdaMarginCurator.ebitdaMarginsPercentage);
-            finDataHashMap.put("companyEbitdaMarginComment", ebitdaMarginCurator.ebitdaComment);
+            finDataHashMap.put("companyEbitdaMarginComment", ebitdaMarginCurator.ebitdaMarginsComment);
             finDataHashMap.put("companyDebtToEquity", debtToEquityCurator.debtToEquityPercentange);
             finDataHashMap.put("companyDebtToEquityComment", debtToEquityCurator.debtToEquityComment);
 //        finDataHashMap.put("companyFcf");

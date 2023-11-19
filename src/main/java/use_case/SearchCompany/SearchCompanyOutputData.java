@@ -11,9 +11,9 @@ public class SearchCompanyOutputData {
     public String companyDebtToEquity;
     public String companyDebtToEquityComment;
 
-    public SearchCompanyOutputData(HashMap<String, Object> companyFinancialData, LocalDateTime creationTime) {
+    public SearchCompanyOutputData(HashMap<String, Object> companyFinancialData) {
         this.containsErrorCheck = (boolean) companyFinancialData.get("containsErrorCheck");
-        this.companyDataFetchTime = creationTime.toString();
+        this.companyDataFetchTime = (String) companyFinancialData.get("companyDataFetchTime");
         this.companyEbitdaMargin = (String) companyFinancialData.get("companyEbitdaMargin");
         this.companyEbitdaMarginComment = (String) companyFinancialData.get("companyEbitdaMarginComment");
         this.companyDebtToEquity = (String) companyFinancialData.get("companyDebtToEquity");

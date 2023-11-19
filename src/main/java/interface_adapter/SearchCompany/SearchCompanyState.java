@@ -1,4 +1,5 @@
 package interface_adapter.SearchCompany;
+import use_case.SearchCompany.SearchCompanyOutputData;
 
 public class SearchCompanyState {
     public String companyTicker = "";
@@ -69,5 +70,21 @@ public class SearchCompanyState {
 
     public void setCompanyDebtToEquityComment(String newCompanyDebtToEquityComment) {
         this.companyDebtToEquityComment = newCompanyDebtToEquityComment;
+    }
+
+    public void setCompanyInformation(SearchCompanyOutputData companyFinancialData) {
+        this.setCompanyDataFetchTime(companyFinancialData.getCompanyDataFetchTime());
+        this.setCompanyEbitdaMargin(companyFinancialData.getCompanyEbitdaMargin());
+        this.setCompanyEbitdaMarginComment(companyFinancialData.getCompanyEbitdaMarginComment());
+        this.setCompanyDebtToEquity(companyFinancialData.getCompanyDebtToEquity());
+        this.setCompanyDebtToEquityComment(companyFinancialData.getCompanyDebtToEquityComment());
+    }
+
+    public void setCompanyInformationNull() {
+        this.setCompanyDataFetchTime(null);
+        this.setCompanyEbitdaMargin(null);
+        this.setCompanyEbitdaMarginComment(null);
+        this.setCompanyDebtToEquity(null);
+        this.setCompanyDebtToEquityComment(null);
     }
 }

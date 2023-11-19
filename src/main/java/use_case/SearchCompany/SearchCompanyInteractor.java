@@ -16,7 +16,7 @@ public class SearchCompanyInteractor implements SearchCompanyInputBoundary {
 
     public void execute() {
         HashMap<String, Object> finDataInfo = searchCompanyDataAccessInterface.getParsedFinData();
-        SearchCompanyOutputData searchCompanyOutputData = new SearchCompanyOutputData(finDataInfo, LocalDateTime.now());
+        SearchCompanyOutputData searchCompanyOutputData = new SearchCompanyOutputData(finDataInfo);
         searchCompanyOutputBoundary.prepareSuccessView(searchCompanyOutputData);
     }
 
