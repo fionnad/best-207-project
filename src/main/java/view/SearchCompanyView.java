@@ -42,7 +42,7 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
         buttonRowPanel.add(searchCompanyButton);
 
         // Information Presented Row (4th Row)
-        JLabel financialData = new JLabel(this.searchCompanyViewModel.getState().getCompanyInformation());
+        JLabel financialData = new JLabel(this.searchCompanyViewModel.getState().getCompanyFrontEndState());
         informationPresentedPanel.add(financialData);
 
         // Main Panel to Hold All Rows (Nested Panels)
@@ -97,6 +97,12 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         SearchCompanyState state = (SearchCompanyState) e.getNewValue();
-        JOptionPane.showMessageDialog(this, state.getCompanyInformation());
+        System.out.println("-----COMPANY INFORMATION-----");
+        System.out.printf("Fetching time is %s%n", state.getCompanyDataFetchTime());
+        System.out.printf("Debt/Equity ratio is %s%n", state.getCompanyDebtToEquity());
+        System.out.printf("Debt/Equity notes: %s%n", state.getCompanyDebtToEquityComment());
+        System.out.printf("Ebidta Margin is %s%n", state.getCompanyEbitdaMargin());
+        System.out.printf("Ebidta Margin notes: %s%n", state.getCompanyEbitdaMarginComment());
+        JOptionPane.showMessageDialog(this, state.getCompanyFrontEndState());
     }
 }
