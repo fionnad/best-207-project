@@ -1,4 +1,4 @@
-package view;
+package view.SearchCompanyView;
 
 import app.SearchCompanyUseCaseFactory;
 import interface_adapter.SearchCompany.SearchCompanyController;

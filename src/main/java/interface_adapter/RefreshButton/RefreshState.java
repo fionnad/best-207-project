@@ -12,6 +12,10 @@ public class RefreshState {
 
     public RefreshState() {
     }
+
+
     public void setRefreshError(String refreshError) {this.refreshError = refreshError;}
     public void setRefreshSuccess(String refreshSuccess) {this.refreshSuccess = refreshSuccess;}
+
+    public String getRefreshSuccess() {return refreshSuccess;}
 }
