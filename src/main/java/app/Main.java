@@ -1,15 +1,19 @@
 package app;
 
-import interface_adapter.FirstPage.FirstPageViewModel;
-import interface_adapter.SearchCompany.SearchCompanyController;
+import data_access.RefreshDataAccessObject;
+import entities.CompanyDataFactory;
+import interface_adapter.RefreshButton.RefreshViewModel;
 import interface_adapter.SearchCompany.SearchCompanyViewModel;
-import view.FirstPageView;
-import view.SearchCompanyView;
+import interface_adapter.ViewManagerModel;
+import view.RankingsPageView;
+import view.SearchCompanyView.SearchCompanyView;
+import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 public class Main {
@@ -27,33 +31,49 @@ public class Main {
         JPanel views = new JPanel(cardLayout);
         application.add(views);
 
-        // The data for the views, such as username and password, are in the ViewModels.
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        new ViewManager(views, cardLayout, viewManagerModel);
+
+        // The data for the views are in the ViewModels.
         // This information will be changed by a presenter object that is reporting the
         // results from the use case. The ViewModels are observable, and will
         // be observed by the Views.
-        FirstPageViewModel firstPageViewModel = new FirstPageViewModel();
+        RefreshViewModel refreshViewModel = new RefreshViewModel();
         SearchCompanyViewModel searchCompanyViewModel = new SearchCompanyViewModel();
 
-        FirstPageView firstPageView = new FirstPageView(firstPageViewModel);
+        RefreshDataAccessObject refreshDataAccessObject;
+
+        try {refreshDataAccessObject = new RefreshDataAccessObject("./users.csv", new File("./tickers.txt"), new CompanyDataFactory());} catch (
+                IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        RankingsPageView rankingsPageView = RankingsPageUseCaseFactory.create(viewManagerModel, refreshViewModel, refreshDataAccessObject);
         SearchCompanyView searchCompanyView = new SearchCompanyView(searchCompanyViewModel);
 
-        views.add(firstPageView);
+        //Add the pages to the JPanel
+        views.add(rankingsPageView);
         views.add(searchCompanyView);
 
-        JButton changeView = new JButton("Switch Page");
-        changeView.addActionListener(
+        JButton nextView = new JButton("Next Page");
+
+
+
+        nextView.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed (ActionEvent e) {
                         CardLayout cardLayout1 = (CardLayout)(views.getLayout());
                         cardLayout1.next(views);
-            }
-        });
-        Container pane = application.getContentPane();
-        pane.add(views, BorderLayout.CENTER);
-        JPanel btnPanel = new JPanel();
-        btnPanel.add(changeView);
-        pane.add(btnPanel, BorderLayout.SOUTH);
+                    }
+                });
+
+        Container pane1 = application.getContentPane();
+        pane1.add(views, BorderLayout.WEST);
+
+        JPanel nextbtnPanel = new JPanel();
+        nextbtnPanel.add(nextView);
+        pane1.add(nextbtnPanel, BorderLayout.SOUTH);
 
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         application.pack();

@@ -1,5 +1,6 @@
 package interface_adapter.RefreshButton;
 
+import interface_adapter.ViewManagerModel;
 import use_case.RefreshButton.RefreshOutputBoundary;
 import use_case.RefreshButton.RefreshOutputData;
 import use_case.SearchCompany.SearchCompanyOutputData;
@@ -10,9 +11,11 @@ import java.time.format.DateTimeFormatter;
 public class RefreshPresenter implements RefreshOutputBoundary {
 
     private final RefreshViewModel refreshViewModel;
+    private ViewManagerModel viewManagerModel;
 
-    public RefreshPresenter(RefreshViewModel refreshViewModel) {
+    public RefreshPresenter(RefreshViewModel refreshViewModel, ViewManagerModel viewManagerModel) {
         this.refreshViewModel = refreshViewModel;
+        this.viewManagerModel = viewManagerModel;
     }
 
     @Override
@@ -21,7 +24,7 @@ public class RefreshPresenter implements RefreshOutputBoundary {
         successMessage.setCreationTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
 
         RefreshState refreshState = refreshViewModel.getState();
-        refreshState.setRefreshSuccess("Success Refresh" + successMessage.getCreationTime());
+        refreshState.setRefreshSuccess("Successful Refresh at" + successMessage.getCreationTime());
         refreshViewModel.firePropertyChanged();
     }
 
