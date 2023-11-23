@@ -2,5 +2,5 @@ package entities;
 
 public interface CompanyFactory {
 
-    Company create(String symbol, Float revenueGrowth1, Float edibta, Float debtToEquity, Float freeCashflowMargin, Float freeCashflowPerShare, Float freeCashflowYield);
+    Company create(String symbol, Double revenueGrowth1, Double edibtaMargins, Double debtToEquity, Double freeCashflowMargin, Double freeCashflowPerShare, Double freeCashflowYield);
 }

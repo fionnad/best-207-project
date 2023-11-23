@@ -3,15 +3,15 @@ package entities;
 public interface Company {
     String getSymbol();
 
-    Float getRevenueGrowth();
+    Double getRevenueGrowth();
 
-    Float getEbidta();
+    Double getEbidtaMargins();
 
-    Float getDebtToEquity();
+    Double getDebtToEquity();
 
-    Float getFreeCashflowMargin();
+    Double getFreeCashflowMargin();
 
-    Float getFreeCashflowPerShare();
+    Double getFreeCashflowPerShare();
 
-    Float getFreeCashflowYield();
+    Double getFreeCashflowYield();
 }

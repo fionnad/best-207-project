@@ -3,25 +3,25 @@ package entities;
 public class CompanyData implements Company {
     private final String symbol;
 
-    private final Float revenueGrowth;
+    private final Double revenueGrowth;
 
-    private final Float ebidta;
+    private final Double ebidta;
 
-    private final Float debtToEquity;
+    private final Double debtToEquity;
 
-    private final Float freeCashflowMargin;
+    private final Double freeCashflowMargin;
 
-    private final Float freeCashflowPerShare;
+    private final Double freeCashflowPerShare;
 
-    private final Float freeCashflowYield;
-
-
+    private final Double freeCashflowYield;
 
 
 
 
 
-    public CompanyData(String symbol, Float revenueGrowth, Float ebidta, Float debtToEquity, Float freeCashflowMargin, Float freeCashflowPerShare, Float freeCashflowYield) {
+
+
+    public CompanyData(String symbol, Double revenueGrowth, Double ebidta, Double debtToEquity, Double freeCashflowMargin, Double freeCashflowPerShare, Double freeCashflowYield) {
         this.symbol = symbol;
         this.revenueGrowth = revenueGrowth;
         this.ebidta = ebidta;
@@ -39,37 +39,37 @@ public class CompanyData implements Company {
     }
 
     @Override
-    public Float getRevenueGrowth() {
+    public Double getRevenueGrowth() {
         return revenueGrowth;
     }
 
     @Override
-    public Float getEbidta() {
+    public Double getEbidtaMargins() {
         return ebidta;
     }
 
     @Override
-    public Float getDebtToEquity() {
+    public Double getDebtToEquity() {
         return debtToEquity;
     }
 
     @Override
-    public Float getFreeCashflowMargin() {
+    public Double getFreeCashflowMargin() {
         return freeCashflowMargin;
     }
 
     @Override
-    public Float getFreeCashflowPerShare() {
+    public Double getFreeCashflowPerShare() {
         return freeCashflowPerShare;
     }
 
     @Override
-    public Float getFreeCashflowYield() {
+    public Double getFreeCashflowYield() {
         return freeCashflowYield;
     }
 
-    public Float[] getAllFinData() {
-       Float[] allFinData = {revenueGrowth, ebidta, debtToEquity, freeCashflowMargin, freeCashflowPerShare, freeCashflowYield};
+    public Double[] getAllFinData() {
+       Double[] allFinData = {revenueGrowth, ebidta, debtToEquity, freeCashflowMargin, freeCashflowPerShare, freeCashflowYield};
        return allFinData;
     }
 

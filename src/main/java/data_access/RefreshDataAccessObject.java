@@ -24,40 +24,16 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
     private final File txtFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
 
-    private final Map<Float, CompanyData> companies = new HashMap<>();
+    private final Map<Double, CompanyData> companies = new HashMap<>();
     private CompanyDataFactory companyDataFactory;
-    public RefreshDataAccessObject(String csvPath, File txtFile, CompanyDataFactory companyDataFactory) throws IOException {
-        super();
+    public RefreshDataAccessObject(String csvPath, String txtPath, CompanyDataFactory companyDataFactory) throws IOException {
+        this.companyDataFactory = companyDataFactory;
 
         csvFile = new File(csvPath);
-        this.txtFile = txtFile;
+        txtFile = new File(txtPath);
 
         headers.put("Symbol", 0);
-        headers.put("Marketcap", 1);
-
-        refresh();
-
-        //if (csvFile.length() == 0) {
-            //refresh();
-        //} else {
-
-            //TODO: do i even need this else statement?
-            //try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-                //String header = reader.readLine();
-
-                //TODO: create exception.
-                //assert header.equals("Symbol,Marketcap");
-                //TODO: wtf does this even do?... update: new csv?
-                //String row;
-                //while ((row = reader.readLine()) != null) {
-                    //String[] col = row.split(",");
-                    //String symbol = String.valueOf(col[headers.get("Symbol")]);
-                    //Float marketcap = Float.valueOf(col[headers.get("Marketcap")]);
-                    //CompanyData companyData = companyDataFactory.create(symbol, marketcap);
-                    //companies.put(companyData.getMarketcap(), companyData);
-                //}
-            //}
-        //}
+        headers.put("Ranking Value", 1);
     }
 
     public String getFinData(String ticker) {
@@ -73,7 +49,7 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
 
             Response response = client.newCall(request).execute();
             assert response.body() != null;
-            return response.body().toString();
+            return response.body().string();
 
         } catch (IOException e) {
             return "Error";
@@ -82,27 +58,51 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
 
     public CompanyData getParsedFinData(String ticker) {
         try {
+            System.out.println("0");
             String finData = getFinData(ticker);
-            StringToJsonParser stringToJsonParser = new StringToJsonParser(finData);
-            JSONObject finJSONObject = stringToJsonParser.parseJson();
+            System.out.println("1");
+            JSONObject finJSONObject = parseJson(finData);
+            System.out.println("2");
+            System.out.println("3");
             JSONObject financialData = (JSONObject) finJSONObject.get("financialData");
-            Float ebidta = (Float) financialData.get("ebidta");
-            Float revenueGrowth = (Float) financialData.get("revenueGrowth");
-            Float debtToEquity = (Float) financialData.get("debtToEquity");
-            ArrayList<Float> calculatedVariables = calculate((Float)financialData.get("freeCashFlow"), (Float)financialData.get("totalRevenue"), (Float)financialData.get("currentPrice"), (Float)financialData.get("revenuePerShare"));
+            System.out.println("4");
+            JSONObject ebidtaMarginsJSON = (JSONObject) financialData.get("ebitdaMargins");
+            Double ebidtaMargins = (Double) ebidtaMarginsJSON.get("raw");
+            System.out.println("5");
+            JSONObject revenueGrowthJSON = (JSONObject) financialData.get("revenueGrowth");
+            Double revenueGrowth = (Double) revenueGrowthJSON.get("raw");
 
-            return companyDataFactory.create(ticker, ebidta, revenueGrowth, debtToEquity, calculatedVariables.get(0), calculatedVariables.get(1), calculatedVariables.get(2));
+            JSONObject debtToEquityJSON = (JSONObject) financialData.get("debtToEquity");
+            Double debtToEquity = (Double) debtToEquityJSON.get("raw");
+
+
+            JSONObject freeCashFlowJSON = (JSONObject) financialData.get("freeCashflow");
+
+            JSONObject totalRevenueJSON = (JSONObject) financialData.get("totalRevenue");
+
+            JSONObject currentPriceJSON = (JSONObject) financialData.get("currentPrice");
+
+
+            JSONObject revenuePerShareJSON = (JSONObject) financialData.get("revenuePerShare");
+            ArrayList<Double> calculatedVariables = calculate((Long)freeCashFlowJSON.get("raw"), (Long)totalRevenueJSON.get("raw"), (Double)currentPriceJSON.get("raw"), (Double)revenuePerShareJSON.get("raw"));
+            return companyDataFactory.create(ticker, ebidtaMargins, revenueGrowth, debtToEquity, calculatedVariables.get(0), calculatedVariables.get(1), calculatedVariables.get(2));
 
         } catch (ParseException e) {
             return null;
         }
     }
 
-    public ArrayList<Float> calculate(Float freeCashFlow, Float totalRevenue, Float currentPrice, Float revenuePerShare) {
-        ArrayList<Float> variables = new ArrayList<Float>();
-        Float freeCashFlowMargin = (freeCashFlow/totalRevenue);
-        Float freeCashFlowPerShare = (freeCashFlow/totalRevenue/revenuePerShare);
-        Float freeCashFlowYield = (freeCashFlow/currentPrice*totalRevenue/revenuePerShare);
+    public JSONObject parseJson(String finData) throws ParseException {
+        JSONParser parser = new JSONParser();
+        return (JSONObject) parser.parse(finData);
+    }
+
+    public ArrayList<Double> calculate(Long freeCashFlow, Long totalRevenue, Double currentPrice, Double revenuePerShare) {
+        ArrayList<Double> variables = new ArrayList<Double>();
+        Long freeCashFlowMarginL = (freeCashFlow/totalRevenue);
+        Double freeCashFlowMargin = freeCashFlowMarginL.doubleValue();
+        Double freeCashFlowPerShare = (freeCashFlow/totalRevenue/revenuePerShare);
+        Double freeCashFlowYield = (freeCashFlow/currentPrice*totalRevenue/revenuePerShare);
         variables.add(freeCashFlowMargin);
         variables.add(freeCashFlowPerShare);
         variables.add(freeCashFlowYield);
@@ -122,16 +122,16 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
             String row;
             while ((row = reader.readLine()) != null) {
                 companyData = getParsedFinData(row);
-                Float count = 0.0f;
-                for (Float i : companyData.getAllFinData()) {
+                Double count = 0.0;
+                for (Double i : companyData.getAllFinData()) {
                     count += i;
                 }
-                Float companyAverage = (count/6);
+                Double companyAverage = (count/6);
                 companies.put(companyAverage, companyData);
 
             }
 
-            TreeMap<Float, CompanyData> sortedHashMap = sortbykey();
+            TreeMap<Double, CompanyData> sortedHashMap = sortbykey();
 
 
             writer = new BufferedWriter(new FileWriter(csvFile));
@@ -139,7 +139,7 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
             writer.newLine();
 
 
-            for (Map.Entry<Float, CompanyData> companyData2 : sortedHashMap.entrySet()) {
+            for (Map.Entry<Double, CompanyData> companyData2 : sortedHashMap.entrySet()) {
                 String line = String.format("%s,%s", companyData2.getValue().getSymbol() , companyData2.getKey());
                 writer.write(line);
                 writer.newLine();
@@ -154,10 +154,10 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
 
 
 
-    public TreeMap<Float, CompanyData> sortbykey()
+    public TreeMap<Double, CompanyData> sortbykey()
     {
         // TreeMap to store values of HashMap
-        TreeMap<Float, CompanyData> sorted = new TreeMap<Float, CompanyData>();
+        TreeMap<Double, CompanyData> sorted = new TreeMap<Double, CompanyData>();
 
         // Copy all data from hashMap into TreeMap
         sorted.putAll(companies);

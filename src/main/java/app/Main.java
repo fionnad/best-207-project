@@ -43,7 +43,7 @@ public class Main {
 
         RefreshDataAccessObject refreshDataAccessObject;
 
-        try {refreshDataAccessObject = new RefreshDataAccessObject("./users.csv", new File("./tickers.txt"), new CompanyDataFactory());} catch (
+        try {refreshDataAccessObject = new RefreshDataAccessObject("./Tickers.csv","./Tickers.txt", new CompanyDataFactory());} catch (
                 IOException e) {
             throw new RuntimeException(e);
         }
@@ -57,8 +57,6 @@ public class Main {
 
         JButton nextView = new JButton("Next Page");
 
-
-
         nextView.addActionListener(
                 new ActionListener() {
                     @Override
@@ -68,12 +66,27 @@ public class Main {
                     }
                 });
 
+        JButton refresh = new JButton("refresh");
+
+        refresh.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed (ActionEvent e) {
+                        refreshDataAccessObject.refresh();
+                    }
+                });
+
+
         Container pane1 = application.getContentPane();
         pane1.add(views, BorderLayout.WEST);
 
         JPanel nextbtnPanel = new JPanel();
         nextbtnPanel.add(nextView);
         pane1.add(nextbtnPanel, BorderLayout.SOUTH);
+
+        JPanel refreshbtnPanel = new JPanel();
+        refreshbtnPanel.add(refresh);
+        pane1.add(refreshbtnPanel, BorderLayout.EAST);
 
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         application.pack();
