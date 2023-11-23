@@ -8,11 +8,9 @@ import java.beans.PropertyChangeSupport;
 
 public class RefreshViewModel extends ViewModel {
     public static final String REFRESH_BUTTON_LABEL = "Refresh";
-    public static final String TITLE_LABEL = "Top Companies Ranked by Marketcap";
+    public static final String TITLE_LABEL = "Top Companies";
     public RefreshState state = new RefreshState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-
-    public String companyInformation = "Please search a company";
 
     public RefreshViewModel() {
         super("Ranking");

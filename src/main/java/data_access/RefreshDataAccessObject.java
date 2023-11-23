@@ -18,7 +18,6 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.util.*;
 
-//TODO: should we make another use case where we have it update whatever is displayed?
 public class RefreshDataAccessObject implements RefreshDataAccessInterface {
     private final File csvFile;
     private final File txtFile;
@@ -34,6 +33,12 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
 
         headers.put("Symbol", 0);
         headers.put("Ranking Value", 1);
+        headers.put("Debt To Equity", 2);
+        headers.put("Ebitda Margin", 3);
+        headers.put("Revenue Growth", 4);
+        headers.put("Free Cashflow Margin", 5);
+        headers.put("Free Cashflow Per Share", 6);
+        headers.put("Free Cashflow Yield", 7);
     }
 
     public String getFinData(String ticker) {
@@ -58,32 +63,27 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
 
     public CompanyData getParsedFinData(String ticker) {
         try {
-            System.out.println("0");
+
             String finData = getFinData(ticker);
-            System.out.println("1");
+
             JSONObject finJSONObject = parseJson(finData);
-            System.out.println("2");
-            System.out.println("3");
+
             JSONObject financialData = (JSONObject) finJSONObject.get("financialData");
-            System.out.println("4");
+            System.out.println(finData);
             JSONObject ebidtaMarginsJSON = (JSONObject) financialData.get("ebitdaMargins");
             Double ebidtaMargins = (Double) ebidtaMarginsJSON.get("raw");
-            System.out.println("5");
+
             JSONObject revenueGrowthJSON = (JSONObject) financialData.get("revenueGrowth");
             Double revenueGrowth = (Double) revenueGrowthJSON.get("raw");
 
             JSONObject debtToEquityJSON = (JSONObject) financialData.get("debtToEquity");
             Double debtToEquity = (Double) debtToEquityJSON.get("raw");
 
-
             JSONObject freeCashFlowJSON = (JSONObject) financialData.get("freeCashflow");
-
             JSONObject totalRevenueJSON = (JSONObject) financialData.get("totalRevenue");
-
             JSONObject currentPriceJSON = (JSONObject) financialData.get("currentPrice");
-
-
             JSONObject revenuePerShareJSON = (JSONObject) financialData.get("revenuePerShare");
+
             ArrayList<Double> calculatedVariables = calculate((Long)freeCashFlowJSON.get("raw"), (Long)totalRevenueJSON.get("raw"), (Double)currentPriceJSON.get("raw"), (Double)revenuePerShareJSON.get("raw"));
             return companyDataFactory.create(ticker, ebidtaMargins, revenueGrowth, debtToEquity, calculatedVariables.get(0), calculatedVariables.get(1), calculatedVariables.get(2));
 
@@ -140,7 +140,14 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
 
 
             for (Map.Entry<Double, CompanyData> companyData2 : sortedHashMap.entrySet()) {
-                String line = String.format("%s,%s", companyData2.getValue().getSymbol() , companyData2.getKey());
+                String line = String.format("%s,%s,%s,%s,%s,%s,%s", companyData2.getValue().getSymbol() ,
+                        companyData2.getKey(),
+                        companyData2.getValue().getDebtToEquity(),
+                        companyData2.getValue().getEbidtaMargins(),
+                        companyData2.getValue().getRevenueGrowth(),
+                        companyData2.getValue().getFreeCashflowMargin(),
+                        companyData2.getValue().getFreeCashflowPerShare(),
+                        companyData2.getValue().getFreeCashflowYield());
                 writer.write(line);
                 writer.newLine();
             }

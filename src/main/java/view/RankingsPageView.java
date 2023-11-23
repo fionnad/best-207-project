@@ -3,6 +3,7 @@ package view;
 import interface_adapter.RefreshButton.RefreshController;
 import interface_adapter.RefreshButton.RefreshState;
 import interface_adapter.RefreshButton.RefreshViewModel;
+import interface_adapter.SearchCompany.SearchCompanyViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,12 +24,19 @@ public class RankingsPageView extends JPanel implements ActionListener, Property
 
         refreshViewModel.addPropertyChangeListener(this);
 
+        JPanel titleRowPanel = new JPanel();
         JLabel title = new JLabel(RefreshViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titleRowPanel.add(title);
 
-        JPanel buttons = new JPanel();
+        JPanel buttonsPanel = new JPanel();
         refresh = new JButton(RefreshViewModel.REFRESH_BUTTON_LABEL);
-        buttons.add(refresh);
+        buttonsPanel.add(refresh);
+
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.add(titleRowPanel);
+        mainPanel.add(buttonsPanel);
 
         refresh.addActionListener(
                 new ActionListener() {
@@ -45,7 +53,7 @@ public class RankingsPageView extends JPanel implements ActionListener, Property
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(title);
+        this.add(mainPanel);
     }
 
     @Override

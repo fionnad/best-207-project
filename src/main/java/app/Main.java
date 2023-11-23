@@ -66,17 +66,6 @@ public class Main {
                     }
                 });
 
-        JButton refresh = new JButton("refresh");
-
-        refresh.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed (ActionEvent e) {
-                        refreshDataAccessObject.refresh();
-                    }
-                });
-
-
         Container pane1 = application.getContentPane();
         pane1.add(views, BorderLayout.WEST);
 
@@ -84,9 +73,7 @@ public class Main {
         nextbtnPanel.add(nextView);
         pane1.add(nextbtnPanel, BorderLayout.SOUTH);
 
-        JPanel refreshbtnPanel = new JPanel();
-        refreshbtnPanel.add(refresh);
-        pane1.add(refreshbtnPanel, BorderLayout.EAST);
+
 
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         application.pack();
