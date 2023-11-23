@@ -121,22 +121,27 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
             reader = new BufferedReader(new FileReader(txtFile));
             String row;
             while ((row = reader.readLine()) != null) {
-                // companyData = companyDataFactory.create(row, calculateMarketcap(row));
-                // companies.put(companyData.getMarketcap(), companyData);
-                //TODO: sort the hashmap wtf!?!?
+                companyData = getParsedFinData(row);
+                Float count = 0.0f;
+                for (Float i : companyData.getAllFinData()) {
+                    count += i;
+                }
+                Float companyAverage = (count/6);
+                companies.put(companyAverage, companyData);
+
             }
 
-            sortbykey();
+            TreeMap<Float, CompanyData> sortedHashMap = sortbykey();
 
 
             writer = new BufferedWriter(new FileWriter(csvFile));
             writer.write(String.join(",", headers.keySet()));
             writer.newLine();
 
-            //TODO: how to iterate through only n number of companies
-            for (CompanyData companyData2 : companies.values()) {
-                // String line = String.format("%s,%s", companyData2.getSymbol() , companyData2.getMarketcap());
-                // writer.write(line);
+
+            for (Map.Entry<Float, CompanyData> companyData2 : sortedHashMap.entrySet()) {
+                String line = String.format("%s,%s", companyData2.getValue().getSymbol() , companyData2.getKey());
+                writer.write(line);
                 writer.newLine();
             }
 
@@ -149,22 +154,16 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
 
 
 
-    public void sortbykey()
+    public TreeMap<Float, CompanyData> sortbykey()
     {
         // TreeMap to store values of HashMap
         TreeMap<Float, CompanyData> sorted = new TreeMap<Float, CompanyData>();
 
         // Copy all data from hashMap into TreeMap
         sorted.putAll(companies);
-        System.out.println("treeMap : "+sorted);
+
+        return sorted;
 
     }
 
-
-
-
-    private Float calculateMarketcap(String symbol) {
-        //TODO: implement method to calculate marketcap from given ticker (this is where we make api call)
-        return null;
-    }
 }

@@ -19,6 +19,8 @@ public class CompanyData implements Company {
 
 
 
+
+
     public CompanyData(String symbol, Float revenueGrowth, Float ebidta, Float debtToEquity, Float freeCashflowMargin, Float freeCashflowPerShare, Float freeCashflowYield) {
         this.symbol = symbol;
         this.revenueGrowth = revenueGrowth;
@@ -27,6 +29,9 @@ public class CompanyData implements Company {
         this.freeCashflowMargin = freeCashflowMargin;
         this.freeCashflowPerShare = freeCashflowPerShare;
         this.freeCashflowYield = freeCashflowYield;
+
+
+
     }
     @Override
     public String getSymbol() {
@@ -61,6 +66,11 @@ public class CompanyData implements Company {
     @Override
     public Float getFreeCashflowYield() {
         return freeCashflowYield;
+    }
+
+    public Float[] getAllFinData() {
+       Float[] allFinData = {revenueGrowth, ebidta, debtToEquity, freeCashflowMargin, freeCashflowPerShare, freeCashflowYield};
+       return allFinData;
     }
 
 
