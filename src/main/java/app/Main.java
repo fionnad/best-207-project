@@ -1,8 +1,10 @@
 package app;
 
+import interface_adapter.ExplainUseCase.ExplainUseCaseViewModel;
 import interface_adapter.FirstPage.FirstPageViewModel;
 import interface_adapter.SearchCompany.SearchCompanyController;
 import interface_adapter.SearchCompany.SearchCompanyViewModel;
+import view.ExplainUseCaseView;
 import view.FirstPageView;
 import view.SearchCompanyView;
 
@@ -33,12 +35,15 @@ public class Main {
         // be observed by the Views.
         FirstPageViewModel firstPageViewModel = new FirstPageViewModel();
         SearchCompanyViewModel searchCompanyViewModel = new SearchCompanyViewModel();
+        ExplainUseCaseViewModel explainUseCaseViewModel = new ExplainUseCaseViewModel();
 
         FirstPageView firstPageView = new FirstPageView(firstPageViewModel);
         SearchCompanyView searchCompanyView = new SearchCompanyView(searchCompanyViewModel);
+        ExplainUseCaseView explainUseCaseView = new ExplainUseCaseView(explainUseCaseViewModel);
 
         views.add(firstPageView);
         views.add(searchCompanyView);
+        views.add(explainUseCaseView);
 
         JButton changeView = new JButton("Switch Page");
         changeView.addActionListener(
