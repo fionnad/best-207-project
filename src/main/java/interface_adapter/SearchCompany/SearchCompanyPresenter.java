@@ -23,6 +23,7 @@ public class SearchCompanyPresenter implements SearchCompanyOutputBoundary {
         } else {
             searchCompanyState.setCompanyFrontEndState("Valid Company");
             searchCompanyState.setCompanyInformation(companyFinancialData);
+
         }
         searchCompanyViewModel.firePropertyChanged();
     }
