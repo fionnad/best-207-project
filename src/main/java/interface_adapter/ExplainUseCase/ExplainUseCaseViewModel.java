@@ -6,6 +6,6 @@ public class ExplainUseCaseViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Understanding Financial Terms";
 
     public ExplainUseCaseViewModel() {
-        super("Articles");
+        super("Financial Terminology Definitions");
     }
 }
