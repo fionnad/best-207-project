@@ -93,16 +93,34 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
     public void actionPerformed(ActionEvent e) {
         ;
     }
-
     @Override
     public void propertyChange(PropertyChangeEvent e) {
+        // Update the informationPresentedPanel with the new state information
+        informationPresentedPanel.removeAll(); // Clear the panel for new information
+
         SearchCompanyState state = (SearchCompanyState) e.getNewValue();
-        System.out.println("-----COMPANY INFORMATION-----");
-        System.out.printf("Fetching time is %s%n", state.getCompanyDataFetchTime());
-        System.out.printf("Debt/Equity ratio is %s%n", state.getCompanyDebtToEquity());
-        System.out.printf("Debt/Equity notes: %s%n", state.getCompanyDebtToEquityComment());
-        System.out.printf("Ebidta Margin is %s%n", state.getCompanyEbitdaMargin());
-        System.out.printf("Ebidta Margin notes: %s%n", state.getCompanyEbitdaMarginComment());
-        JOptionPane.showMessageDialog(this, state.getCompanyFrontEndState());
+
+        // Instead of printing to the console, update the JLabel with the new information
+        JLabel financialDataLabel = new JLabel(
+                "<html>Fetching time: " + state.getCompanyDataFetchTime() +
+                        "<br>Debt/Equity ratio: " + state.getCompanyDebtToEquity() +
+                        "<br>Debt/Equity notes: " + state.getCompanyDebtToEquityComment() +
+                        "<br>Ebidta Margin: " + state.getCompanyEbitdaMargin() +
+                        "<br>Ebidta Margin notes: " + state.getCompanyEbitdaMarginComment() + "</html>"
+        );
+
+        // Add the updated label to the panel
+        informationPresentedPanel.add(financialDataLabel);
+
+        // Revalidate and repaint the panel to reflect the changes
+        informationPresentedPanel.revalidate();
+        informationPresentedPanel.repaint();
+
+        // Show the dialog only if there is a change in company's frontend state
+        if (!state.getCompanyFrontEndState().equals("Nothing to show")) {
+            JOptionPane.showMessageDialog(this, state.getCompanyFrontEndState());
+        }
     }
+
+
 }

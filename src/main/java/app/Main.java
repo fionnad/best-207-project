@@ -1,9 +1,17 @@
 package app;
 
+import interface_adapter.ExplainUseCase.ExplainUseCaseViewModel;
 import data_access.RefreshDataAccessObject;
 import entities.CompanyDataFactory;
 import interface_adapter.RefreshButton.RefreshViewModel;
+import interface_adapter.ExplainUseCase.ExplainUseCaseViewModel;
+import interface_adapter.RefreshButton.RefreshViewModel;
+import interface_adapter.SearchCompany.SearchCompanyController;
 import interface_adapter.SearchCompany.SearchCompanyViewModel;
+import view.ExplainUseCaseView;
+import view.ExplainUseCaseView;
+import view.RankingsPageView;
+import view.SearchCompanyView.SearchCompanyView;
 import interface_adapter.ViewManagerModel;
 import view.RankingsPageView;
 import view.SearchCompanyView.SearchCompanyView;
@@ -40,6 +48,7 @@ public class Main {
         // be observed by the Views.
         RefreshViewModel refreshViewModel = new RefreshViewModel();
         SearchCompanyViewModel searchCompanyViewModel = new SearchCompanyViewModel();
+        ExplainUseCaseViewModel explainUseCaseViewModel = new ExplainUseCaseViewModel();
 
         RefreshDataAccessObject refreshDataAccessObject;
 
@@ -50,10 +59,12 @@ public class Main {
 
         RankingsPageView rankingsPageView = RankingsPageUseCaseFactory.create(viewManagerModel, refreshViewModel, refreshDataAccessObject);
         SearchCompanyView searchCompanyView = new SearchCompanyView(searchCompanyViewModel);
+        ExplainUseCaseView explainUseCaseView = new ExplainUseCaseView(explainUseCaseViewModel);
 
         //Add the pages to the JPanel
         views.add(rankingsPageView);
         views.add(searchCompanyView);
+        views.add(explainUseCaseView);
 
         JButton nextView = new JButton("Next Page");
 
