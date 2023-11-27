@@ -21,6 +21,10 @@ public class GetYahooFinanceApiData implements SearchCompanyDataAccessInterface 
         this.urlMain = String.format("https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/%s/financial-data", this.ticker);
     }
 
+    public GetYahooFinanceApiData() {
+        this.urlMain = "https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/%s/financial-data";
+    }
+
     public String getFinData() {
         try {
             OkHttpClient client = new OkHttpClient();

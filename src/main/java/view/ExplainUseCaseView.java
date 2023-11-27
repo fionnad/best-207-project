@@ -1,7 +1,7 @@
 package view;
 
 import interface_adapter.ExplainUseCase.ExplainUseCaseViewModel;
-import interface_adapter.FirstPage.FirstPageViewModel;
+
 
 import javax.swing.*;
 import java.awt.*;
