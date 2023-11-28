@@ -1,9 +1,6 @@
 package use_case.SearchCompany;
 
-import org.json.simple.parser.ParseException;
-
-import java.time.LocalDateTime;
-import java.util.HashMap;
+import entities.CompanyData;
 
 public class SearchCompanyInteractor implements SearchCompanyInputBoundary {
     final SearchCompanyDataAccessInterface searchCompanyDataAccessInterface;
@@ -15,12 +12,12 @@ public class SearchCompanyInteractor implements SearchCompanyInputBoundary {
     }
 
     public void execute() {
-        HashMap<String, Object> finDataInfo = searchCompanyDataAccessInterface.getParsedFinData();
-        SearchCompanyOutputData searchCompanyOutputData = new SearchCompanyOutputData(finDataInfo);
-        searchCompanyOutputBoundary.prepareSuccessView(searchCompanyOutputData);
+        CompanyData finDataInfo = searchCompanyDataAccessInterface.getCompanyData();
+        if (finDataInfo.isValidCompany()) {
+            SearchCompanyOutputData searchCompanyOutputData = new SearchCompanyOutputData(finDataInfo);
+            searchCompanyOutputBoundary.prepareSuccessView(searchCompanyOutputData);
+        } else {
+            searchCompanyOutputBoundary.prepareFailView();
+        }
     }
-
-    public boolean validateCompany() {
-        return true;
-    };
 }

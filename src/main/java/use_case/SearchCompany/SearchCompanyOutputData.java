@@ -1,27 +1,34 @@
 package use_case.SearchCompany;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
+import entities.CompanyData;
 
 public class SearchCompanyOutputData {
-    public boolean containsErrorCheck;
+    public boolean isValidCompany;
     public String companyDataFetchTime;
     public String companyEbitdaMargin;
     public String companyEbitdaMarginComment;
     public String companyDebtToEquity;
     public String companyDebtToEquityComment;
 
-    public SearchCompanyOutputData(HashMap<String, Object> companyFinancialData) {
-        this.containsErrorCheck = (boolean) companyFinancialData.get("containsErrorCheck");
-        this.companyDataFetchTime = (String) companyFinancialData.get("companyDataFetchTime");
-        this.companyEbitdaMargin = (String) companyFinancialData.get("companyEbitdaMargin");
-        this.companyEbitdaMarginComment = (String) companyFinancialData.get("companyEbitdaMarginComment");
-        this.companyDebtToEquity = (String) companyFinancialData.get("companyDebtToEquity");
-        this.companyDebtToEquityComment = (String) companyFinancialData.get("companyDebtToEquityComment");
+    public SearchCompanyOutputData(CompanyData companyFinancialData) {
+        this.isValidCompany = companyFinancialData.isValidCompany();
+        this.companyDataFetchTime = companyFinancialData.getTimeFetched();
+        this.companyEbitdaMargin = validator(companyFinancialData.getEbitdaMargins());
+        this.companyEbitdaMarginComment = validator(companyFinancialData.getEbitdaMarginsAnalysis());
+        this.companyDebtToEquity = validator(companyFinancialData.getDebtToEquity());
+        this.companyDebtToEquityComment = validator(companyFinancialData.getDebtToEquityAnalysis());
     }
 
-    public boolean getContainsErrorCheck() {
-        return this.containsErrorCheck;
+    public String validator(Object object) {
+        if (object == null) {
+            return "No data";
+        } else {
+            return object.toString();
+        }
+    }
+
+    public boolean getIsValidCompany() {
+        return this.isValidCompany;
     }
 
     public String getCompanyDataFetchTime() {
