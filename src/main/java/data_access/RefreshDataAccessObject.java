@@ -58,7 +58,8 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
             writer.write(String.join(",", headers.keySet()));
             writer.newLine();
             for (Map.Entry<Double, CompanyData> companyData2 : sortedHashMap.entrySet()) {
-                String line = String.format("%s,%s,%s,%s,%s,%s,%s", companyData2.getValue().getTicker() ,
+                String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s",
+                        companyData2.getValue().getTicker() ,
                         companyData2.getKey(),
                         companyData2.getValue().getDebtToEquity(),
                         companyData2.getValue().getEbitdaMargins(),

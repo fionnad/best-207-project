@@ -18,7 +18,7 @@ public class CompanyDataFactory {
             if (finJSONObject.containsKey("error")) {
                 return createNullCompany(ticker);
             } else {
-                HashMap<String, Object> finJsonData = extractCompanyFinInfo((JSONObject) finJSONObject.get("financialData"));
+                HashMap<String, Object> finJsonData = extractCompanyFinInfo((JSONObject) finJSONObject.get("body"));
                 return createNewCompany(ticker, finJsonData);
             }
         } catch (ParseException e) {
