@@ -17,19 +17,16 @@ public class SearchCompanyPresenter implements SearchCompanyOutputBoundary {
     @Override
     public void prepareSuccessView(SearchCompanyOutputData companyFinancialData) {
         SearchCompanyState searchCompanyState = searchCompanyViewModel.getState();
-        if (companyFinancialData.getContainsErrorCheck()) {
-            searchCompanyState.setCompanyFrontEndState("Invalid company, please search again.");
-            searchCompanyState.setCompanyInformationNull();
-        } else {
-            searchCompanyState.setCompanyFrontEndState("Valid Company");
-            searchCompanyState.setCompanyInformation(companyFinancialData);
-
-        }
+        searchCompanyState.setCompanyFrontEndState("Valid Company");
+        searchCompanyState.setCompanyInformation(companyFinancialData);
         searchCompanyViewModel.firePropertyChanged();
     }
 
     @Override
-    public void prepareFailView(String error) {
-
+    public void prepareFailView() {
+        SearchCompanyState searchCompanyState = searchCompanyViewModel.getState();
+        searchCompanyState.setCompanyFrontEndState("Invalid company, please search again.");
+        searchCompanyState.setCompanyInformationNull();
+        searchCompanyViewModel.firePropertyChanged();
     }
 }

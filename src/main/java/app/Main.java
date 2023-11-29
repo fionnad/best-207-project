@@ -1,27 +1,21 @@
 package app;
 
+import entities.CompanyDataFactory;
 import interface_adapter.ExplainUseCase.ExplainUseCaseViewModel;
 import data_access.RefreshDataAccessObject;
-import entities.CompanyDataFactory;
+//import entities.CompanyDataFactory;
 import interface_adapter.RefreshButton.RefreshViewModel;
-import interface_adapter.ExplainUseCase.ExplainUseCaseViewModel;
-import interface_adapter.RefreshButton.RefreshViewModel;
-import interface_adapter.SearchCompany.SearchCompanyController;
 import interface_adapter.SearchCompany.SearchCompanyViewModel;
-import view.ExplainUseCaseView;
 import view.ExplainUseCaseView;
 import view.RankingsPageView;
 import view.SearchCompanyView.SearchCompanyView;
 import interface_adapter.ViewManagerModel;
-import view.RankingsPageView;
-import view.SearchCompanyView.SearchCompanyView;
 import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 
 public class Main {
