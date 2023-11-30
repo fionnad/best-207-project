@@ -1,7 +1,11 @@
 package use_case.RefreshButton;
 
+import entities.CompanyData;
+
+import java.util.TreeMap;
+
 public interface RefreshDataAccessInterface {
-    void refresh();
+    String[] refresh();
 
     String getFinData(String ticker);
 }

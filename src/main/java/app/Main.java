@@ -46,7 +46,10 @@ public class Main {
 
         RefreshDataAccessObject refreshDataAccessObject;
 
-        try {refreshDataAccessObject = new RefreshDataAccessObject("./Tickers.csv","./Tickers.txt", new CompanyDataFactory());} catch (
+        try {
+            refreshDataAccessObject = new RefreshDataAccessObject("./Tickers.csv","./Tickers.txt", new CompanyDataFactory());
+        }
+        catch (
                 IOException e) {
             throw new RuntimeException(e);
         }

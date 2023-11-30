@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.ArrayList;
+
 public class CompanyData {
     private final boolean isValidCompany;
     private final String ticker;
