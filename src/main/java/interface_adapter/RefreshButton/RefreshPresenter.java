@@ -19,12 +19,12 @@ public class RefreshPresenter implements RefreshOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(RefreshOutputData successMessage) {
-        LocalDateTime responseTime = LocalDateTime.parse(successMessage.getCreationTime());
-        successMessage.setCreationTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
-
+    public void prepareSuccessView(RefreshOutputData refreshOutputData) {
+        LocalDateTime responseTime = LocalDateTime.parse(refreshOutputData.getCreationTime());
+        refreshOutputData.setCreationTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
         RefreshState refreshState = refreshViewModel.getState();
-        refreshState.setRefreshSuccess("Successful Refresh at " + successMessage.getCreationTime());
+        refreshState.setCompanyInfo(refreshOutputData.getCompanies());
+        refreshState.setRefreshSuccess("Successful Refresh at " + refreshOutputData.getCreationTime());
         refreshViewModel.firePropertyChanged();
     }
 

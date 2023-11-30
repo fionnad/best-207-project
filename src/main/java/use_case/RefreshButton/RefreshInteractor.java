@@ -10,9 +10,9 @@ public class RefreshInteractor {
         this.refreshOutputBoundary = refreshOutputBoundary;
     }
     public void execute() {
-        refreshDataAccessObject.refresh();
+        String[] tickers = refreshDataAccessObject.refresh();
         LocalDateTime now = LocalDateTime.now();
-        RefreshOutputData refreshOutputData = new RefreshOutputData(now.toString());
+        RefreshOutputData refreshOutputData = new RefreshOutputData(now.toString(), tickers);
         refreshOutputBoundary.prepareSuccessView(refreshOutputData);
     }
 }
