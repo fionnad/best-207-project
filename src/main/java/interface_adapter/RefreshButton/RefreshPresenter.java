@@ -25,6 +25,7 @@ public class RefreshPresenter implements RefreshOutputBoundary {
         RefreshState refreshState = refreshViewModel.getState();
         refreshState.setCompanyInfo(refreshOutputData.getCompanies());
         refreshState.setRefreshSuccess("Successful Refresh at " + refreshOutputData.getCreationTime());
+        refreshState.setRefreshStatus("Successful Refresh");
         refreshViewModel.firePropertyChanged();
     }
 
