@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class RefreshInteractorTest {
     @Test
-    public void testRefreshInteractor() {
+    public void testRefreshInteractorSuccess() {
 
         RefreshDataAccessObject refreshDataAccessObject;
 

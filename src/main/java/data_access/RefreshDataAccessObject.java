@@ -6,6 +6,7 @@ import entities.CompanyDataFactory;
 import use_case.RefreshButton.RefreshDataAccessInterface;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.util.*;
 
 public class RefreshDataAccessObject implements RefreshDataAccessInterface {
@@ -39,13 +40,27 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
         BufferedWriter writer;
         BufferedReader reader;
         CompanyData companyData;
-
+        BufferedReader lineReader;
+        double totalLineCount = 0.0;
+        double lineCount = 0.0;
 
         try {
             reader = new BufferedReader(new FileReader(txtFile));
+            lineReader = new BufferedReader(new FileReader(txtFile));
             String row;
+
+
+
+            while (lineReader.readLine() != null) {
+                totalLineCount += 1;
+            }
+
+
             while ((row = reader.readLine()) != null) {
                 companyData = getParsedFinData(row);
+
+                lineCount += 1;
+                System.out.println(lineCount/totalLineCount*100);
 
                 Double count = 0.0;
                 for (Double i : companyData.getAllFinData()) {
@@ -106,10 +121,6 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
         }
     }
 
-    @Override
-    public String getFinData(String ticker) {
-        return null;
-    }
 
     public TreeMap<Double, CompanyData> sortbykey() {
         // TreeMap to store values of HashMap
