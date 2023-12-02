@@ -1,18 +1,15 @@
 package interface_adapter.ExplainUseCase;
 
 import use_case.ExplainUseCase.ExplainUseCaseInteractor;
-import use_case.ExplainUseCase.ExplainUseCaseDataAccessInterface;
-import use_case.ExplainUseCase.ExplainUseCaseOutputBoundary;
 
 public class ExplainUseCaseController {
-    private final ExplainUseCaseInteractor explainUseCaseInteractor;
+    private final ExplainUseCaseInteractor interactor;
 
-    public ExplainUseCaseController(ExplainUseCaseDataAccessInterface dataAccess, ExplainUseCaseOutputBoundary outputBoundary) {
-        this.explainUseCaseInteractor = new ExplainUseCaseInteractor(dataAccess, outputBoundary);
+    public ExplainUseCaseController(ExplainUseCaseInteractor interactor) {
+        this.interactor = interactor;
     }
 
-    public void getDefinition(String term) {
-        explainUseCaseInteractor.getFinancialTermDefinitions(term);
-        // The outputBoundary (presenter) will handle the presentation logic
+    public void onTermSelected(String term) {
+        interactor.getFinancialTermDefinitions();
     }
 }

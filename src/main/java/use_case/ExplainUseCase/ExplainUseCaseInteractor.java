@@ -2,18 +2,18 @@ package use_case.ExplainUseCase;
 
 import entities.FinancialTermDefinition;
 
-public class ExplainUseCaseInteractor{
-    private final ExplainUseCaseDataAccessInterface explainUseCaseDataAccessObject;
-    private final ExplainUseCaseOutputBoundary explainUseCaseOutputBoundary;
+public class ExplainUseCaseInteractor {
+    private final ExplainUseCaseDataAccessInterface dataAccess;
+    private final ExplainUseCaseOutputBoundary presenter;
 
-    public ExplainUseCaseInteractor(ExplainUseCaseDataAccessInterface explainUseCaseDataAccessInterface, ExplainUseCaseOutputBoundary explainUseCaseOutputBoundary) {
-        this.explainUseCaseDataAccessObject = explainUseCaseDataAccessInterface;
-        this.explainUseCaseOutputBoundary = explainUseCaseOutputBoundary;
+    public ExplainUseCaseInteractor(ExplainUseCaseDataAccessInterface dataAccess, ExplainUseCaseOutputBoundary presenter) {
+        this.dataAccess = dataAccess;
+        this.presenter = presenter;
     }
 
-    public void getFinancialTermDefinitions(String term) {
-        FinancialTermDefinition definitions = explainUseCaseDataAccessObject.getFinancialTermDefinitions(term);
+    public void getFinancialTermDefinitions() {
+        FinancialTermDefinition definitions = dataAccess.getFinancialTermDefinitions();
         ExplainUseCaseOutputData outputData = new ExplainUseCaseOutputData(definitions);
-        explainUseCaseOutputBoundary.present(outputData);
+        presenter.present(outputData);
     }
 }

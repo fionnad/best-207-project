@@ -5,7 +5,7 @@ import use_case.ExplainUseCase.ExplainUseCaseDataAccessInterface;
 
 public class ExplainUseCaseDataAcessObject implements ExplainUseCaseDataAccessInterface {
     @Override
-    public FinancialTermDefinition getFinancialTermDefinitions(String term) {
+    public FinancialTermDefinition getFinancialTermDefinitions() {
         return new FinancialTermDefinition();
     }
 }
