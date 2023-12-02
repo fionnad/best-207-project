@@ -91,9 +91,9 @@ public class CompanyDataFactory {
         finDataHashMap.put("ebitdaMarginsAnalysis", analyzeEbitdaMargins((Double) finDataHashMap.get("ebitdaMargins")));
         finDataHashMap.put("debtToEquityAnalysis", analyzeDebtToEquity((Double) finDataHashMap.get("debtToEquity")));
         finDataHashMap.put("revenueGrowthAnalysis", analyzeRevenueGrowth((Double) finDataHashMap.get("revenueGrowth")));
-        finDataHashMap.put("freeCashFlowMarginAnalysis", analyzeFreeCashFlowMargin((Double) finDataHashMap.get("freeCashflowMargin")));
-        finDataHashMap.put("freeCashFlowPerShareAnalysis", analyzeFreeCashFlowPerShare((Double) finDataHashMap.get("freeCashflowPerShare")));
-        finDataHashMap.put("freeCashFlowYieldAnalysis", analyzeFreeCashFlowYield((Double) finDataHashMap.get("freeCashflowYield")));
+        finDataHashMap.put("freeCashFlowMarginAnalysis", analyzeFreeCashFlowMargin((Double) finDataHashMap.get("freeCashFlowMargin")));
+        finDataHashMap.put("freeCashFlowPerShareAnalysis", analyzeFreeCashFlowPerShare((Double) finDataHashMap.get("freeCashFlowPerShare")));
+        finDataHashMap.put("freeCashFlowYieldAnalysis", analyzeFreeCashFlowYield((Double) finDataHashMap.get("freeCashFlowYield")));
         return finDataHashMap;
     }
 
