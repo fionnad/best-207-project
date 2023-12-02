@@ -9,6 +9,14 @@ public class SearchCompanyOutputData {
     public String companyEbitdaMarginComment;
     public String companyDebtToEquity;
     public String companyDebtToEquityComment;
+    public String companyRevenueGrowth;
+    public String companyRevenueGrowthComment;
+    public String companyFreeCashFlowMargin;
+    public String companyFreeCashFlowMarginComment;
+    public String companyFreeCashFlowPerShare;
+    public String companyFreeCashFlowPerShareComment;
+    public String companyFreeCashFlowYield;
+    public String companyFreeCashFlowYieldComment;
 
     public SearchCompanyOutputData(CompanyData companyFinancialData) {
         this.isValidCompany = companyFinancialData.isValidCompany();
@@ -17,6 +25,14 @@ public class SearchCompanyOutputData {
         this.companyEbitdaMarginComment = validator(companyFinancialData.getEbitdaMarginsAnalysis());
         this.companyDebtToEquity = validator(companyFinancialData.getDebtToEquity());
         this.companyDebtToEquityComment = validator(companyFinancialData.getDebtToEquityAnalysis());
+        this.companyRevenueGrowth = validator(companyFinancialData.getRevenueGrowth());
+        this.companyRevenueGrowthComment = validator(companyFinancialData.getRevenueGrowthAnalysis());
+        this.companyFreeCashFlowMargin = validator(companyFinancialData.getFreeCashFlowMargin());
+        this.companyFreeCashFlowMarginComment = validator(companyFinancialData.getFreeCashFlowMarginAnalysis());
+        this.companyFreeCashFlowPerShare = validator(companyFinancialData.getFreeCashFlowPerShare());
+        this.companyFreeCashFlowPerShareComment = validator(companyFinancialData.getFreeCashFlowPerShareAnalysis());
+        this.companyFreeCashFlowYield = validator(companyFinancialData.getFreeCashFlowYield());
+        this.companyFreeCashFlowYieldComment = validator(companyFinancialData.getFreeCashFlowYieldAnalysis());
     }
 
     public String validator(Object object) {
@@ -50,7 +66,32 @@ public class SearchCompanyOutputData {
     public String getCompanyDebtToEquityComment() {
         return this.companyDebtToEquityComment;
     }
+    public String getCompanyRevenueGrowth() {
+        return this.companyRevenueGrowth;
+    }
 
+    public String getCompanyRevenueGrowthComment() {
+        return this.companyRevenueGrowthComment;
+    }
+    public String getCompanyFreeCashFlowMargin() {
+        return this.companyFreeCashFlowMargin;
+    }
+
+    public String getCompanyFreeCashFlowMarginComment() {
+        return this.companyFreeCashFlowMarginComment;
+    }public String getCompanyFreeCashFlowPerShare() {
+        return this.companyFreeCashFlowPerShare;
+    }
+
+    public String getCompanyFreeCashFlowPerShareComment() {
+        return this.companyFreeCashFlowPerShareComment;
+    }public String getCompanyFreeCashFlowYield() {
+        return this.companyFreeCashFlowYield;
+    }
+
+    public String getCompanyFreeCashFlowYieldComment() {
+        return this.companyFreeCashFlowYieldComment;
+    }
     public void setCompanyDataFetchTime(String companyDataFetchTime) {
         this.companyDataFetchTime = companyDataFetchTime;
     }

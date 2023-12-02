@@ -106,7 +106,16 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
                         "<br>Debt/Equity ratio: " + state.getCompanyDebtToEquity() +
                         "<br>Debt/Equity notes: " + state.getCompanyDebtToEquityComment() +
                         "<br>Ebidta Margin: " + state.getCompanyEbitdaMargin() +
-                        "<br>Ebidta Margin notes: " + state.getCompanyEbitdaMarginComment() + "</html>"
+                        "<br>Ebidta Margin notes: " + state.getCompanyEbitdaMarginComment() +
+                        "<br>Revenue Growth: " + state.getCompanyRevenueGrowth() +
+                        "<br>Revenue Growth notes: " + state.getCompanyRevenueGrowthComment() +
+                        "<br>Free Cash Flow Margin: " + state.getCompanyFreeCashFlowMargin() +
+                        "<br>Free Cash Flow Margin notes: " + state.getCompanyFreeCashFlowMarginComment() +
+                        "<br>Free Cash Flow Per Share: " + state.getCompanyFreeCashFlowPerShare() +
+                        "<br>Free Cash Flow Per Share notes: " + state.getCompanyFreeCashFlowPerShareComment() +
+                        "<br>Free Cash Flow Yield: " + state.getCompanyFreeCashFlowYield() +
+                        "<br>Free Cash Flow Yield notes: " + state.getCompanyFreeCashFlowYieldComment() +
+                        "</html>"
         );
 
         // Add the updated label to the panel
