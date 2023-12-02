@@ -4,7 +4,7 @@ import entities.FinancialTermDefinition;
 
 public class ExplainUseCaseState {
     private String currentTerm;
-    private FinancialTermDefinition definitions;
+    private FinancialTermDefinition definitions = new FinancialTermDefinition();
 
     public void setCurrentTerm(String term) {
         this.currentTerm = term;
@@ -29,7 +29,6 @@ public class ExplainUseCaseState {
                 return definitions.getFreeCashFlowPerShare();
             case "freecashflowyield":
                 return definitions.getFreeCashFlowYield();
-            // ... handle other cases ...
             default:
                 return "Definition not found for the term: " + currentTerm;
         }

@@ -53,7 +53,6 @@ public class Main {
                 IOException e) {
             throw new RuntimeException(e);
         }
-        explainUseCaseViewModel.fetchInitialData();
 
         RankingsPageView rankingsPageView = RankingsPageUseCaseFactory.create(viewManagerModel, refreshViewModel, refreshDataAccessObject);
         SearchCompanyView searchCompanyView = new SearchCompanyView(searchCompanyViewModel);
