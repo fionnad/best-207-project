@@ -6,6 +6,7 @@ public class RefreshState {
 
     private String refreshSuccess = "Refresh Success";
 
+    private String refreshStatus = null;
     public String company1;
     public String company2;
     public String company3;
@@ -16,6 +17,8 @@ public class RefreshState {
 
     public RefreshState(RefreshState copy) {
         this.refreshError = copy.refreshError;
+        this.refreshSuccess = copy.refreshSuccess;
+        this.refreshStatus = copy.refreshStatus;
     }
 
     public RefreshState() {
@@ -34,6 +37,9 @@ public class RefreshState {
     public void setRefreshError(String refreshError) {this.refreshError = refreshError;}
     public void setRefreshSuccess(String refreshSuccess) {this.refreshSuccess = refreshSuccess;}
 
+    public void setRefreshStatus(String status) {this.refreshStatus = status;}
+
+    public String getRefreshStatus() {return this.refreshStatus;}
 
     public String[] getRefreshSuccess() {
         return new String[]{company1, company2, company3, company4, company5};

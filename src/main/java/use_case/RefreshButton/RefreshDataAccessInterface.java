@@ -6,6 +6,4 @@ import java.util.TreeMap;
 
 public interface RefreshDataAccessInterface {
     String[] refresh();
-
-    String getFinData(String ticker);
 }
