@@ -154,11 +154,11 @@ public class CompanyDataFactory {
             return null;
         } else {
             if (number < 80) {
-                return "The company's debtToEquity ratio is low, indicates it has much more equity than debt, which is favorable.";
+                return "The company's Debt to Equity ratio is low, indicates it has much more equity than debt, which is favorable.";
             } else if (number >= 80 && number <= 120) {
-                return "The company's debtToEquity ratio is near 100%, indicating it has near equal amounts of debt and equity.";
+                return "The company's Debt to Equity ratio is near 100%, indicating it has near equal amounts of debt and equity.";
             } else {
-                return "The company's debtToEquity ratio is high, indicating it has much more debt than equity, which is unfavorable.";
+                return "The company's Debt to Equity ratio is high, indicating it has much more debt than equity, which is unfavorable.";
             }
         }
     }

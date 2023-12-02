@@ -96,19 +96,4 @@ public class SearchCompanyOutputData {
         this.companyDataFetchTime = companyDataFetchTime;
     }
 
-    public void setCompanyEbitdaMargin(String companyEbitdaMargin) {
-        this.companyEbitdaMargin = companyEbitdaMargin;
-    }
-
-    public void setCompanyEbitdaMarginComment(String companyEbitdaMarginComment) {
-        this.companyEbitdaMarginComment = companyEbitdaMarginComment;
-    }
-
-    public void setCompanyDebtToEquity(String companyDebtToEquity) {
-        this.companyDebtToEquity = companyDebtToEquity;
-    }
-
-    public void setCompanyDebtToEquityComment(String companyDebtToEquityComment) {
-        this.companyDebtToEquityComment = companyDebtToEquityComment;
-    }
 }

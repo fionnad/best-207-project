@@ -14,7 +14,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 
-public class RankingsPageView extends JPanel implements ActionListener, PropertyChangeListener {
+public class  RankingsPageView extends JPanel implements ActionListener, PropertyChangeListener {
     private final RefreshViewModel refreshViewModel;
     private final RefreshController refreshController;
     private final JButton refresh;
