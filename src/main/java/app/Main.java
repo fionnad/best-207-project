@@ -1,7 +1,6 @@
 package app;
 
 import entities.CompanyDataFactory;
-import interface_adapter.ExplainUseCase.ExplainUseCaseController;
 import interface_adapter.ExplainUseCase.ExplainUseCaseViewModel;
 import data_access.RefreshDataAccessObject;
 //import entities.CompanyDataFactory;
@@ -54,7 +53,6 @@ public class Main {
                 IOException e) {
             throw new RuntimeException(e);
         }
-        ExplainUseCaseController explainUseCaseController = ExplainUseCaseFactory.create();
         explainUseCaseViewModel.fetchInitialData();
 
         RankingsPageView rankingsPageView = RankingsPageUseCaseFactory.create(viewManagerModel, refreshViewModel, refreshDataAccessObject);

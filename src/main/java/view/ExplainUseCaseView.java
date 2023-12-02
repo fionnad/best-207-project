@@ -1,5 +1,7 @@
 package view;
 
+import app.ExplainUseCaseFactory;
+import interface_adapter.ExplainUseCase.ExplainUseCaseController;
 import interface_adapter.ExplainUseCase.ExplainUseCaseViewModel;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -52,6 +54,10 @@ public class ExplainUseCaseView extends JPanel implements PropertyChangeListener
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ("state".equals(evt.getPropertyName())) {
+            ExplainUseCaseController explainUseCaseController = ExplainUseCaseFactory.create();
+            String term = viewModel.getState().getCurrentTerm();
+            explainUseCaseController.onTermSelected(term);
+
             String definition = viewModel.getState().getDefinitionForCurrentTerm();
             definitionsTextArea.setText(definition);
         }
