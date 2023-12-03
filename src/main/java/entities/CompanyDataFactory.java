@@ -115,11 +115,27 @@ public class CompanyDataFactory {
         JSONObject earnings = (JSONObject) jsonObject.get("earnings");
         JSONArray earningsDateArray = (JSONArray) earnings.get("earningsDate");
         JSONObject earningsDateObject = (JSONObject) earningsDateArray.get(0);
-        JSONObject dividendDateObject = (JSONObject) jsonObject.get("dividendDate");
-        JSONObject exDividendDateObject = (JSONObject) jsonObject.get("exDividendDate");
+        Object dividendDateObject = jsonObject.get("dividendDate");
+        Object exDividendDateObject =  jsonObject.get("exDividendDate");
         eventDataHashMap.put("earningsDate", (String) earningsDateObject.get("fmt"));
-        eventDataHashMap.put("dividendDate", (String) dividendDateObject.get("fmt"));
-        eventDataHashMap.put("exDividendDate", (String) exDividendDateObject.get("fmt"));
+
+        if (nullCheck(dividendDateObject)) {
+            eventDataHashMap.put("dividendDate", "N/A");
+        }
+
+        else {
+            JSONObject dividendDateJSONObject = (JSONObject) dividendDateObject;
+            eventDataHashMap.put("dividendDate", (String) dividendDateJSONObject.get("fmt"));
+        }
+
+        if (nullCheck(exDividendDateObject)) {
+            eventDataHashMap.put("earningsDate", "N/A");
+        }
+        else {
+            JSONObject exDividendDateJSONObject = (JSONObject) exDividendDateObject;
+            eventDataHashMap.put("exDividendDate", (String) exDividendDateJSONObject.get("fmt"));
+        }
+
         return eventDataHashMap;
     }
 
