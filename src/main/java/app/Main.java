@@ -81,7 +81,7 @@ public class Main {
         nextbtnPanel.add(nextView);
         pane1.add(nextbtnPanel, BorderLayout.SOUTH);
 
-
+        refreshDataAccessObject.refresh();
 
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         application.pack();
