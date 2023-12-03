@@ -6,10 +6,12 @@ import data_access.RefreshDataAccessObject;
 //import entities.CompanyDataFactory;
 import interface_adapter.RefreshButton.RefreshViewModel;
 import interface_adapter.SearchCompany.SearchCompanyViewModel;
+import interface_adapter.SettingPage.SettingPageViewModel;
 import view.ExplainUseCaseView;
 import view.RankingsPageView;
 import view.SearchCompanyView.SearchCompanyView;
 import interface_adapter.ViewManagerModel;
+import view.SettingPageView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -43,6 +45,7 @@ public class Main {
         RefreshViewModel refreshViewModel = new RefreshViewModel();
         SearchCompanyViewModel searchCompanyViewModel = new SearchCompanyViewModel();
         ExplainUseCaseViewModel explainUseCaseViewModel = new ExplainUseCaseViewModel();
+        SettingPageViewModel settingPageViewModel = new SettingPageViewModel();
 
         RefreshDataAccessObject refreshDataAccessObject;
 
@@ -57,11 +60,13 @@ public class Main {
         RankingsPageView rankingsPageView = RankingsPageUseCaseFactory.create(viewManagerModel, refreshViewModel, refreshDataAccessObject);
         SearchCompanyView searchCompanyView = new SearchCompanyView(searchCompanyViewModel);
         ExplainUseCaseView explainUseCaseView = new ExplainUseCaseView(explainUseCaseViewModel);
+        SettingPageView settingPageView = new SettingPageView(settingPageViewModel);
 
         //Add the pages to the JPanel
         views.add(rankingsPageView);
         views.add(searchCompanyView);
         views.add(explainUseCaseView);
+        views.add(settingPageView);
 
         JButton nextView = new JButton("Next Page");
 

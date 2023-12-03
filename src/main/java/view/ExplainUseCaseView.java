@@ -1,7 +1,6 @@
 package view;
 
-import app.ExplainUseCaseFactory;
-import interface_adapter.ExplainUseCase.ExplainUseCaseController;
+
 import interface_adapter.ExplainUseCase.ExplainUseCaseState;
 import interface_adapter.ExplainUseCase.ExplainUseCaseViewModel;
 import java.awt.*;
@@ -12,12 +11,12 @@ import java.util.Map;
 import javax.swing.*;
 
 public class ExplainUseCaseView extends JPanel implements PropertyChangeListener {
-    private final ExplainUseCaseViewModel viewModel;
+    private final ExplainUseCaseViewModel explainUseCaseViewModel;
     private final JTextArea definitionsTextArea = new JTextArea(10, 30);
     private final Map<String, JButton> termButtons = new HashMap<>();
 
     public ExplainUseCaseView(ExplainUseCaseViewModel viewModel) {
-        this.viewModel = viewModel;
+        this.explainUseCaseViewModel = viewModel;
         viewModel.addPropertyChangeListener(this);
         setLayout(new BorderLayout());
         initializeUI();
@@ -41,8 +40,8 @@ public class ExplainUseCaseView extends JPanel implements PropertyChangeListener
         termButtons.put("FreeCashFlowPerShare", new JButton("FreeCashFlowPerShare"));
         termButtons.put("FreeCashFlowYield", new JButton("FreeCashFlowYield"));
         termButtons.forEach((term, button) -> button.addActionListener(e -> {
-            viewModel.getState().setCurrentTerm(term);
-            viewModel.firePropertyChanged();
+            explainUseCaseViewModel.getState().setCurrentTerm(term);
+            explainUseCaseViewModel.firePropertyChanged();
         }));
     }
 
@@ -55,7 +54,7 @@ public class ExplainUseCaseView extends JPanel implements PropertyChangeListener
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ("state".equals(evt.getPropertyName())) {
-            ExplainUseCaseState state = viewModel.getState();
+            ExplainUseCaseState state = explainUseCaseViewModel.getState();
             String definition = state.getDefinitionForCurrentTerm();
             definitionsTextArea.setText(definition);
         }
