@@ -8,13 +8,14 @@ import java.io.IOException;
 
 public class YahooFinEconomicEventsService {
 
-    public static String getEconomicEvents() {
+    public static String getEconomicEvents(String ticker) {
         try {
             String authorization = "7aa0af6cf0mshc69956a71e31b89p19cb70jsn7137ce116466";
             OkHttpClient client = new OkHttpClient();
+            String url = String.format("https://yahoo-finance15.p.rapidapi.com/api/v1/markets/stock/modules?ticker=%s&module=calendar-events", ticker);
 
             Request request = new Request.Builder()
-                    .url("https://yahoo-finance15.p.rapidapi.com/api/v1/markets/stock/modules?ticker=AAPL&module=calendar-events")
+                    .url(url)
                     .get()
                     .addHeader("X-RapidAPI-Key", authorization)
                     .addHeader("X-RapidAPI-Host", "yahoo-finance15.p.rapidapi.com")
@@ -28,13 +29,14 @@ public class YahooFinEconomicEventsService {
         }
     }
 
-    public static String getSECFilings() {
+    public static String getSECFilings(String ticker) {
         try {
             String authorization = "7aa0af6cf0mshc69956a71e31b89p19cb70jsn7137ce116466";
             OkHttpClient client = new OkHttpClient();
+            String url = String.format("https://yahoo-finance15.p.rapidapi.com/api/v1/markets/stock/modules?ticker=%s&module=sec-filings", ticker);
 
             Request request = new Request.Builder()
-                    .url("https://yahoo-finance15.p.rapidapi.com/api/v1/markets/stock/modules?ticker=AAPL&module=sec-filings")
+                    .url(url)
                     .get()
                     .addHeader("X-RapidAPI-Key", authorization)
                     .addHeader("X-RapidAPI-Host", "yahoo-finance15.p.rapidapi.com")
@@ -48,10 +50,4 @@ public class YahooFinEconomicEventsService {
         }
     }
 
-
-
-    public static void main(String[] args) {
-        System.out.println(getEconomicEvents());
-        System.out.println(getSECFilings());
-    }
 }

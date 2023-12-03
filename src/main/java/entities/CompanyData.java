@@ -24,6 +24,10 @@ public class CompanyData {
     private final String freeCashFlowPerShareAnalysis;
     private final Double freeCashFlowYield;
     private final String freeCashFlowYieldAnalysis;
+    public final String earningsDate;
+    public final String dividendDate;
+    public final String exDividendDate;
+
 
 
     public CompanyData(boolean isValidCompany, String ticker, String timeFetched, Double currentPrice,
@@ -32,7 +36,8 @@ public class CompanyData {
                        Double debtToEquity, String debtToEquityAnalysis, Double revenueGrowth,
                        String revenueGrowthAnalysis, Double freeCashFlowMargin, String freeCashFlowMarginAnalysis,
                        Double freeCashFlowPerShare, String freeCashFlowPerShareAnalysis, Double freeCashFlowYield,
-                       String freeCashFlowYieldAnalysis) {
+                       String freeCashFlowYieldAnalysis,
+                       String earningsDate, String dividendDate, String exDividendDate) {
         this.isValidCompany = isValidCompany;
         this.ticker = ticker;
         this.timeFetched = timeFetched;
@@ -54,6 +59,9 @@ public class CompanyData {
         this.freeCashFlowPerShareAnalysis = freeCashFlowPerShareAnalysis;
         this.freeCashFlowYield = freeCashFlowYield;
         this.freeCashFlowYieldAnalysis = freeCashFlowYieldAnalysis;
+        this.earningsDate = earningsDate;
+        this.dividendDate = dividendDate;
+        this.exDividendDate = exDividendDate;
     }
 
     // Getters for fields
@@ -139,6 +147,17 @@ public class CompanyData {
 
     public String getFreeCashFlowYieldAnalysis() {
         return freeCashFlowYieldAnalysis;
+    }
+
+    public String getEarningsDate() {
+        return earningsDate;
+    }
+
+    public String getDividendDate() {
+        return dividendDate;
+    }
+    public String getExDividendDate() {
+        return exDividendDate;
     }
 
     public Double[] getAllFinData() {
