@@ -8,8 +8,4 @@ public class ExplainUseCaseController {
     public ExplainUseCaseController(ExplainUseCaseInteractor interactor) {
         this.interactor = interactor;
     }
-
-    public void onTermSelected(String term) {
-        interactor.getFinancialTermDefinitions();
-    }
 }

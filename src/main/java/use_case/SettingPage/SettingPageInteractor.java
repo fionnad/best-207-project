@@ -1,39 +1,27 @@
 package use_case.SettingPage;
 
 public class SettingPageInteractor {
-
-    // Presuming there's a mechanism to store and retrieve the font size
-    // For example, this could be a preference system, database, or in-memory state
+    private static final int DEFAULT_FONT_SIZE = 12;
     private int fontSize;
 
     public SettingPageInteractor() {
-        this.fontSize = retrieveInitialFontSize();
+        this.fontSize = DEFAULT_FONT_SIZE; // Or load this from a persistent storage
     }
 
-    public void increaseFontSize() {
-        fontSize++;
-        applyFontSizeChange(fontSize);
-    }
-
-    public void decreaseFontSize() {
-        fontSize--;
-        applyFontSizeChange(fontSize);
-    }
-
-    public int getInitialFontSize() {
-        // This method should return the actual initial font size
-        // For now, returning a placeholder value
+    public int getFontSize() {
         return fontSize;
     }
 
-    private void applyFontSizeChange(int newFontSize) {
-        // Here we would have logic to change the font size in the application
-        // This might involve updating a configuration file, database, or directly applying to the UI components
-        // For example:
-        // updateApplicationFontSize(newFontSize);
+    public void setFontSize(int fontSize) {
+        this.fontSize = fontSize;
+        // Persist the font size change here if necessary
     }
 
-    private int retrieveInitialFontSize() {
-        return 12; // Default value
+    public void increaseFontSize() {
+        setFontSize(getFontSize() + 1);
+    }
+
+    public void decreaseFontSize() {
+        setFontSize(getFontSize() - 1);
     }
 }

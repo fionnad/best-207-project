@@ -1,11 +1,7 @@
 package interface_adapter.ExplainUseCase;
 
-import data_access.ExplainUseCaseDataAcessObject;
-import interface_adapter.SearchCompany.SearchCompanyState;
 import interface_adapter.ViewModel;
-import use_case.ExplainUseCase.ExplainUseCaseDataAccessInterface;
-import use_case.ExplainUseCase.ExplainUseCaseInteractor;
-import use_case.ExplainUseCase.ExplainUseCaseOutputBoundary;
+
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

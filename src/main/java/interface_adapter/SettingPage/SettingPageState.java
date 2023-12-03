@@ -3,8 +3,8 @@ package interface_adapter.SettingPage;
 public class SettingPageState {
     private int fontSize;
 
-    public SettingPageState() {
-        this.fontSize = getDefaultFontSize();
+    public SettingPageState(int fontSize) {
+        this.fontSize = fontSize;
     }
 
     public int getFontSize() {
@@ -13,9 +13,5 @@ public class SettingPageState {
 
     public void setFontSize(int fontSize) {
         this.fontSize = fontSize;
-    }
-
-    private int getDefaultFontSize() {
-        return 12; // Placeholder value
     }
 }
