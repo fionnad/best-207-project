@@ -115,6 +115,12 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
                         "<br>Free Cash Flow Per Share notes: " + state.getCompanyFreeCashFlowPerShareComment() +
                         "<br>Free Cash Flow Yield: " + state.getCompanyFreeCashFlowYield() +
                         "<br>Free Cash Flow Yield notes: " + state.getCompanyFreeCashFlowYieldComment() +
+                        "<br>Free Cash Flow Yield notes: " + state.getCompanyFreeCashFlowYieldComment() +
+                        "<br>" +
+                        "<br>Important dates:" +
+                        "<br>Earnings release date: " + state.getEarningsDate() +
+                        "<br>Dividend release date: " + state.getDividendDate() +
+                        "<br>Ex-dividend release date: " + state.getExDividendDate() +
                         "</html>"
         );
 

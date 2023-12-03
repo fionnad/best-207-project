@@ -17,6 +17,9 @@ public class SearchCompanyState {
     public String companyFreeCashFlowPerShareComment = null;
     public String companyFreeCashFlowYield = null;
     public String companyFreeCashFlowYieldComment = null;
+    public String earningsDate = null;
+    public String dividendDate = null;
+    public String exDividendDate = null;
 
     public SearchCompanyState(SearchCompanyState copy) {
         companyTicker = copy.companyTicker;
@@ -27,57 +30,58 @@ public class SearchCompanyState {
     public String getCompanyTicker() {
         return companyTicker;
     }
-
     public String getCompanyFrontEndState() {
         return this.companyFrontEndState;
     }
-
     public String getCompanyDataFetchTime() {
         return this.companyDataFetchTime;
     }
-
     public String getCompanyEbitdaMargin() {
         return this.companyEbitdaMargin;
     }
-
     public String getCompanyEbitdaMarginComment() {
         return this.companyEbitdaMarginComment;
     }
-
     public String getCompanyDebtToEquity() {
         return this.companyDebtToEquity;
     }
-
     public String getCompanyDebtToEquityComment() {
         return this.companyDebtToEquityComment;
     }
     public String getCompanyRevenueGrowth() {
         return this.companyRevenueGrowth;
     }
-
     public String getCompanyRevenueGrowthComment() {
         return this.companyRevenueGrowthComment;
     }
     public String getCompanyFreeCashFlowMargin() {
         return this.companyFreeCashFlowMargin;
     }
-
     public String getCompanyFreeCashFlowMarginComment() {
         return this.companyFreeCashFlowMarginComment;
     }
     public String getCompanyFreeCashFlowPerShare() {
         return this.companyFreeCashFlowPerShare;
     }
-
     public String getCompanyFreeCashFlowPerShareComment() {
         return this.companyFreeCashFlowPerShareComment;
     }
     public String getCompanyFreeCashFlowYield() {
         return this.companyFreeCashFlowYield;
     }
-
     public String getCompanyFreeCashFlowYieldComment() {
         return this.companyFreeCashFlowYieldComment;
+    }
+    public String getEarningsDate() {
+        return this.earningsDate;
+    }
+
+    public String getDividendDate() {
+        return this.dividendDate;
+    }
+
+    public String getExDividendDate() {
+        return this.exDividendDate;
     }
 
     public void setCompanyTicker(String companyTicker) {
@@ -135,6 +139,17 @@ public class SearchCompanyState {
     public void setCompanyFreeCashFlowYieldComment(String newCompanyFreeCashFlowYieldComment) {
         this.companyFreeCashFlowYieldComment = newCompanyFreeCashFlowYieldComment;
     }
+    public void setEarningsDate(String earningsDate) {
+        this.earningsDate = earningsDate;
+    }
+
+    public void setDividendDate(String dividendDate) {
+        this.dividendDate = dividendDate;
+    }
+
+    public void setExDividendDate(String exDividendDate) {
+        this.exDividendDate = exDividendDate;
+    }
 
     public void setCompanyInformation(SearchCompanyOutputData companyFinancialData) {
         this.setCompanyDataFetchTime(companyFinancialData.getCompanyDataFetchTime());
@@ -150,6 +165,9 @@ public class SearchCompanyState {
         this.setCompanyFreeCashFlowPerShareComment(companyFinancialData.getCompanyFreeCashFlowPerShareComment());
         this.setCompanyFreeCashFlowYield(companyFinancialData.getCompanyFreeCashFlowYield());
         this.setCompanyFreeCashFlowYieldComment(companyFinancialData.getCompanyFreeCashFlowYieldComment());
+        this.setEarningsDate(companyFinancialData.getEarningsDate());
+        this.setDividendDate(companyFinancialData.getDividendDate());
+        this.setExDividendDate(companyFinancialData.getExDividendDate());
     }
 
     public void setCompanyInformationNull() {

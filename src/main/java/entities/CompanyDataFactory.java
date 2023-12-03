@@ -2,6 +2,7 @@ package entities;
 
 import data_access.ConvertToJSONService;
 import data_access.YahooFinAPIService;
+import data_access.YahooFinEconomicEventsService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -15,11 +16,14 @@ public class CompanyDataFactory {
             String finData = YahooFinAPIService.getFinData(ticker);
             JSONObject finJSONObject = ConvertToJSONService.convertToJSONObject(finData);
 
+            String eventData = YahooFinEconomicEventsService.getEconomicEvents(ticker);
+            JSONObject eventJSONObject = ConvertToJSONService.convertToJSONObject(eventData);
             if (finJSONObject.containsKey("error")) {
                 return createNullCompany(ticker);
             } else {
                 HashMap<String, Object> finJsonData = extractCompanyFinInfo((JSONObject) finJSONObject.get("body"));
-                return createNewCompany(ticker, finJsonData);
+                HashMap<String, String> eventJsonData = extractCompanyEventData((JSONObject) eventJSONObject.get("body"));
+                return createNewCompany(ticker, finJsonData, eventJsonData);
             }
         } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -47,10 +51,13 @@ public class CompanyDataFactory {
                 null,
                 null,
                 null,
+                null,
+                null,
+                null,
                 null);
     }
 
-    public static CompanyData createNewCompany(String ticker, HashMap<String, Object> companyFinData) {
+    public static CompanyData createNewCompany(String ticker, HashMap<String, Object> companyFinData, HashMap<String, String> eventFinData) {
         return new CompanyData(true,
                 ticker,
                 LocalTime.now().toString(),
@@ -71,7 +78,11 @@ public class CompanyDataFactory {
                 (Double) companyFinData.get("freeCashFlowPerShare"),
                 (String) companyFinData.get("freeCashFlowPerShareAnalysis"),
                 (Double) companyFinData.get("freeCashFlowYield"),
-                (String) companyFinData.get("freeCashFlowYieldAnalysis"));
+                (String) companyFinData.get("freeCashFlowYieldAnalysis"),
+                eventFinData.get("earningsDate"),
+                eventFinData.get("dividendDate"),
+                eventFinData.get("exDividendDate")
+                );
     }
 
     public static HashMap<String, Object> extractCompanyFinInfo(JSONObject jsonObject) {
@@ -95,6 +106,19 @@ public class CompanyDataFactory {
         finDataHashMap.put("freeCashFlowPerShareAnalysis", analyzeFreeCashFlowPerShare((Double) finDataHashMap.get("freeCashFlowPerShare")));
         finDataHashMap.put("freeCashFlowYieldAnalysis", analyzeFreeCashFlowYield((Double) finDataHashMap.get("freeCashFlowYield")));
         return finDataHashMap;
+    }
+
+    public static HashMap<String, String> extractCompanyEventData(JSONObject jsonObject) {
+        HashMap<String, String> eventDataHashMap = new HashMap<>();
+        JSONObject earnings = (JSONObject) jsonObject.get("earnings");
+        JSONArray earningsDateArray = (JSONArray) earnings.get("earningsDate");
+        JSONObject earningsDateObject = (JSONObject) earningsDateArray.get(0);
+        JSONObject dividendDateObject = (JSONObject) jsonObject.get("dividendDate");
+        JSONObject exDividendDateObject = (JSONObject) jsonObject.get("exDividendDate");
+        eventDataHashMap.put("earningsDate", (String) earningsDateObject.get("fmt"));
+        eventDataHashMap.put("dividendDate", (String) dividendDateObject.get("fmt"));
+        eventDataHashMap.put("exDividendDate", (String) exDividendDateObject.get("fmt"));
+        return eventDataHashMap;
     }
 
     public static Double calculate(String operation, Number input1, Number input2) {

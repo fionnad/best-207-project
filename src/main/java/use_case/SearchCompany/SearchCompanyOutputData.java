@@ -17,6 +17,9 @@ public class SearchCompanyOutputData {
     public String companyFreeCashFlowPerShareComment;
     public String companyFreeCashFlowYield;
     public String companyFreeCashFlowYieldComment;
+    public String earningsDate;
+    public String dividendDate;
+    public String exDividendDate;
 
     public SearchCompanyOutputData(CompanyData companyFinancialData) {
         this.isValidCompany = companyFinancialData.isValidCompany();
@@ -33,6 +36,9 @@ public class SearchCompanyOutputData {
         this.companyFreeCashFlowPerShareComment = validator(companyFinancialData.getFreeCashFlowPerShareAnalysis());
         this.companyFreeCashFlowYield = validator(companyFinancialData.getFreeCashFlowYield());
         this.companyFreeCashFlowYieldComment = validator(companyFinancialData.getFreeCashFlowYieldAnalysis());
+        this.earningsDate = companyFinancialData.getEarningsDate();
+        this.dividendDate = companyFinancialData.getDividendDate();
+        this.exDividendDate = companyFinancialData.getExDividendDate();
     }
 
     public String validator(Object object) {
@@ -46,52 +52,58 @@ public class SearchCompanyOutputData {
     public boolean getIsValidCompany() {
         return this.isValidCompany;
     }
-
     public String getCompanyDataFetchTime() {
         return this.companyDataFetchTime;
     }
-
     public String getCompanyEbitdaMargin() {
         return this.companyEbitdaMargin;
     }
-
     public String getCompanyEbitdaMarginComment() {
         return this.companyEbitdaMarginComment;
     }
-
     public String getCompanyDebtToEquity() {
         return this.companyDebtToEquity;
     }
-
     public String getCompanyDebtToEquityComment() {
         return this.companyDebtToEquityComment;
     }
     public String getCompanyRevenueGrowth() {
         return this.companyRevenueGrowth;
     }
-
     public String getCompanyRevenueGrowthComment() {
         return this.companyRevenueGrowthComment;
     }
     public String getCompanyFreeCashFlowMargin() {
         return this.companyFreeCashFlowMargin;
     }
-
     public String getCompanyFreeCashFlowMarginComment() {
         return this.companyFreeCashFlowMarginComment;
-    }public String getCompanyFreeCashFlowPerShare() {
+    }
+    public String getCompanyFreeCashFlowPerShare() {
         return this.companyFreeCashFlowPerShare;
     }
-
     public String getCompanyFreeCashFlowPerShareComment() {
         return this.companyFreeCashFlowPerShareComment;
-    }public String getCompanyFreeCashFlowYield() {
+    }
+    public String getCompanyFreeCashFlowYield() {
         return this.companyFreeCashFlowYield;
     }
-
     public String getCompanyFreeCashFlowYieldComment() {
         return this.companyFreeCashFlowYieldComment;
     }
+
+    public String getEarningsDate() {
+        return earningsDate;
+    }
+
+    public String getDividendDate() {
+        return dividendDate;
+    }
+
+    public String getExDividendDate() {
+        return exDividendDate;
+    }
+
     public void setCompanyDataFetchTime(String companyDataFetchTime) {
         this.companyDataFetchTime = companyDataFetchTime;
     }
