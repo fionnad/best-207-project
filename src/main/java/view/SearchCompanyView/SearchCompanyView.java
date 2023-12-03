@@ -64,7 +64,6 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
                         SearchCompanyState currentState = searchCompanyViewModel.getState();
                         currentState.setCompanyTicker(searchCompanyInputField.getText() + e.getKeyChar());
                         searchCompanyViewModel.setState(currentState);
-                        System.out.println(currentState.getCompanyTicker());
                     }
 
                     @Override

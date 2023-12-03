@@ -185,5 +185,8 @@ public class SearchCompanyState {
         this.setCompanyFreeCashFlowPerShareComment(null);
         this.setCompanyFreeCashFlowYield(null);
         this.setCompanyFreeCashFlowYieldComment(null);
+        this.setEarningsDate(null);
+        this.setDividendDate(null);
+        this.setExDividendDate(null);
     }
 }
