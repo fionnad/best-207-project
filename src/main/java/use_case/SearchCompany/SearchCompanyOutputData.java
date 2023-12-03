@@ -3,6 +3,7 @@ package use_case.SearchCompany;
 import entities.CompanyData;
 
 public class SearchCompanyOutputData {
+    public String ticker;
     public boolean isValidCompany;
     public String companyDataFetchTime;
     public String companyEbitdaMargin;
@@ -22,6 +23,7 @@ public class SearchCompanyOutputData {
     public String exDividendDate;
 
     public SearchCompanyOutputData(CompanyData companyFinancialData) {
+        this.ticker = companyFinancialData.getTicker();
         this.isValidCompany = companyFinancialData.isValidCompany();
         this.companyDataFetchTime = companyFinancialData.getTimeFetched();
         this.companyEbitdaMargin = validator(companyFinancialData.getEbitdaMargins());
@@ -47,6 +49,10 @@ public class SearchCompanyOutputData {
         } else {
             return object.toString();
         }
+    }
+
+    public String getTicker() {
+        return this.ticker;
     }
 
     public boolean getIsValidCompany() {

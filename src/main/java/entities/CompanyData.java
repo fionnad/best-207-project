@@ -1,5 +1,8 @@
 package entities;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class CompanyData {
@@ -40,7 +43,7 @@ public class CompanyData {
                        String earningsDate, String dividendDate, String exDividendDate) {
         this.isValidCompany = isValidCompany;
         this.ticker = ticker;
-        this.timeFetched = timeFetched;
+        this.timeFetched = timeConversion(timeFetched);
         this.currentPrice = currentPrice;
         this.freeCashFlow = freeCashFlow;
         this.totalRevenue = totalRevenue;
@@ -165,7 +168,7 @@ public class CompanyData {
             return new Double[]{
                     currentPrice, freeCashFlow * 1.0, totalRevenue * 1.0, revenuePerShare,
                     totalSharesOutstanding, marketCapitalization, ebitdaMargins, debtToEquity,
-                    revenueGrowth, freeCashFlowMargin, freeCashFlowPerShare, freeCashFlowYield
+                    revenueGrowth, freeCashFlowMargin, freeCashFlowPerShare, freeCashFlowYield,
             };
         } catch (NullPointerException e) {
             return new Double[]{
@@ -173,6 +176,16 @@ public class CompanyData {
                     totalSharesOutstanding, marketCapitalization, ebitdaMargins, debtToEquity,
                     revenueGrowth, freeCashFlowMargin, freeCashFlowPerShare, freeCashFlowYield
             };
+        }
+    }
+
+    public static String timeConversion(String timeString) {
+        if (timeString == null) {
+            return null;
+        } else {
+            LocalTime time = LocalTime.parse(timeString);
+            LocalDate currentDate = LocalDate.now();
+            return currentDate.atTime(time).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         }
     }
 

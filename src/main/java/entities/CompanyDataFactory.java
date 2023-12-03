@@ -2,7 +2,7 @@ package entities;
 
 import data_access.ConvertToJSONService;
 import data_access.YahooFinAPIService;
-import data_access.YahooFinEconomicEventsService;
+import data_access.YahooFinDatesService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -14,16 +14,15 @@ public class CompanyDataFactory {
     public static CompanyData execute(String ticker) {
         try {
             String finData = YahooFinAPIService.getFinData(ticker);
+            String eventData = YahooFinDatesService.getEconomicEvents(ticker);
             JSONObject finJSONObject = ConvertToJSONService.convertToJSONObject(finData);
-
-            String eventData = YahooFinEconomicEventsService.getEconomicEvents(ticker);
             JSONObject eventJSONObject = ConvertToJSONService.convertToJSONObject(eventData);
-            if (finJSONObject.containsKey("error")) {
+            if (finJSONObject.containsKey("message")) {
                 return createNullCompany(ticker);
             } else {
-                HashMap<String, Object> finJsonData = extractCompanyFinInfo((JSONObject) finJSONObject.get("body"));
-                HashMap<String, String> eventJsonData = extractCompanyEventData((JSONObject) eventJSONObject.get("body"));
-                return createNewCompany(ticker, finJsonData, eventJsonData);
+                HashMap<String, Object> finJsonData = extractCompanyFinInfo((JSONObject) finJSONObject.get("body"), (JSONObject) eventJSONObject.get("body"));
+                System.out.println(finJsonData);
+                return createNewCompany(ticker, finJsonData);
             }
         } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -57,7 +56,7 @@ public class CompanyDataFactory {
                 null);
     }
 
-    public static CompanyData createNewCompany(String ticker, HashMap<String, Object> companyFinData, HashMap<String, String> eventFinData) {
+    public static CompanyData createNewCompany(String ticker, HashMap<String, Object> companyFinData) {
         return new CompanyData(true,
                 ticker,
                 LocalTime.now().toString(),
@@ -79,21 +78,21 @@ public class CompanyDataFactory {
                 (String) companyFinData.get("freeCashFlowPerShareAnalysis"),
                 (Double) companyFinData.get("freeCashFlowYield"),
                 (String) companyFinData.get("freeCashFlowYieldAnalysis"),
-                eventFinData.get("earningsDate"),
-                eventFinData.get("dividendDate"),
-                eventFinData.get("exDividendDate")
-                );
+                (String) companyFinData.get("earningsDate"),
+                (String) companyFinData.get("dividendDate"),
+                (String) companyFinData.get("exDividendDate"));
     }
 
-    public static HashMap<String, Object> extractCompanyFinInfo(JSONObject jsonObject) {
+    public static HashMap<String, Object> extractCompanyFinInfo(JSONObject jsonFinData, JSONObject jsonEventData) {
         HashMap<String, Object> finDataHashMap = new HashMap<>();
-        finDataHashMap.put("currentPrice", validateDouble(jsonObject.get("currentPrice")));
-        finDataHashMap.put("freeCashFlow", validateLong(jsonObject.get("freeCashflow")));
-        finDataHashMap.put("totalRevenue", validateLong(jsonObject.get("totalRevenue")));
-        finDataHashMap.put("revenueGrowth", validateDouble(jsonObject.get("revenueGrowth")));
-        finDataHashMap.put("ebitdaMargins", validateDouble(jsonObject.get("ebitdaMargins")));
-        finDataHashMap.put("debtToEquity", validateDouble(jsonObject.get("debtToEquity")));
-        finDataHashMap.put("revenuePerShare", validateDouble(jsonObject.get("revenuePerShare")));
+        HashMap<String, String> eventDataHashMap = extractCompanyEventData(jsonEventData);
+        finDataHashMap.put("currentPrice", validateDouble(jsonFinData.get("currentPrice")));
+        finDataHashMap.put("freeCashFlow", validateLong(jsonFinData.get("freeCashflow")));
+        finDataHashMap.put("totalRevenue", validateLong(jsonFinData.get("totalRevenue")));
+        finDataHashMap.put("revenueGrowth", validateDouble(jsonFinData.get("revenueGrowth")));
+        finDataHashMap.put("ebitdaMargins", validateDouble(jsonFinData.get("ebitdaMargins")));
+        finDataHashMap.put("debtToEquity", validateDouble(jsonFinData.get("debtToEquity")));
+        finDataHashMap.put("revenuePerShare", validateDouble(jsonFinData.get("revenuePerShare")));
         finDataHashMap.put("totalSharesOutstanding", calculate("division", (Long) finDataHashMap.get("totalRevenue"), (Double) finDataHashMap.get("revenuePerShare")));
         finDataHashMap.put("marketCapitalization", calculate("multiplication", (Double) finDataHashMap.get("currentPrice"), (Double) finDataHashMap.get("totalSharesOutstanding")));
         finDataHashMap.put("freeCashFlowMargin", calculate("division", (Long) finDataHashMap.get("freeCashFlow"), (Long) finDataHashMap.get("totalRevenue")));
@@ -105,6 +104,9 @@ public class CompanyDataFactory {
         finDataHashMap.put("freeCashFlowMarginAnalysis", analyzeFreeCashFlowMargin((Double) finDataHashMap.get("freeCashFlowMargin")));
         finDataHashMap.put("freeCashFlowPerShareAnalysis", analyzeFreeCashFlowPerShare((Double) finDataHashMap.get("freeCashFlowPerShare")));
         finDataHashMap.put("freeCashFlowYieldAnalysis", analyzeFreeCashFlowYield((Double) finDataHashMap.get("freeCashFlowYield")));
+        finDataHashMap.put("earningsDate", eventDataHashMap.get("earningsDate"));
+        finDataHashMap.put("dividendDate", eventDataHashMap.get("dividendDate"));
+        finDataHashMap.put("exDividendDate", eventDataHashMap.get("exDividendDate"));
         return finDataHashMap;
     }
 
@@ -132,7 +134,7 @@ public class CompanyDataFactory {
     }
 
     public static Double validateDouble(Object object) {
-        if (nullCheck(object)) {
+        if (nullCheckFinData(object)) {
             return null;
         } else {
             JSONObject newObject = (JSONObject) object;
@@ -141,7 +143,7 @@ public class CompanyDataFactory {
         }
 
     public static Long validateLong(Object object) {
-        if (nullCheck(object)) {
+        if (nullCheckFinData(object)) {
             return null;
         } else {
             JSONObject newObject = (JSONObject) object;
@@ -149,7 +151,7 @@ public class CompanyDataFactory {
         }
     }
 
-    public static boolean nullCheck(Object object) {
+    public static boolean nullCheckFinData(Object object) {
         if (object instanceof JSONArray) { // Case 1: Within an existing company JSON, variable data is missing. The API returns this as [].
             return true;
         } else {
@@ -194,7 +196,7 @@ public class CompanyDataFactory {
             if (number < 0) {
                 return "The Revenue Growth is negative, indicating concerning or negative trends for the company.";
             } else if (number >= 0 && number <= 0.1) {
-                return "The Revenue Growth is very narrow, indicating stability for the company .";
+                return "The Revenue Growth is very narrow, indicating stability for the company.";
             } else {
                 return "The Revenue Growth is very high, signifying healthy growth for the company.";
             }
@@ -205,7 +207,7 @@ public class CompanyDataFactory {
         if (number == null) {
             return null;
         } else {
-            if (number > 0.05) {
+            if (number < 0.05) {
                 return "The FCF Margin is very small, indicating poor financial health and operational efficiency.";
             } else if (number >= 0.05 && number <= 0.15) {
                 return "The FCF Margin is stable, indicating stable financial health and operational efficiency.";
@@ -219,7 +221,7 @@ public class CompanyDataFactory {
         if (number == null) {
             return null;
         } else {
-            if (number > 0.05) {
+            if (number < 0.05) {
                 return "The FCF Per Share is very small, indicating an inability to meet financial and debt obligations.";
             } else if (number >= 0.05 && number <= 0.15) {
                 return "The FCF Per Share is stable, indicating only satisfactory cash to satisfy some debt obligations.";
@@ -233,7 +235,7 @@ public class CompanyDataFactory {
         if (number == null) {
             return null;
         } else {
-            if (number > 0.04) {
+            if (number < 0.04) {
                 return "The FCF Yield is very small, and may not warrant further research on the company as value is low.";
             } else if (number >= 0.04 && number <= 0.1) {
                 return "The FCF Yield stable, indicating possible growth for the company as value is neutral.";
