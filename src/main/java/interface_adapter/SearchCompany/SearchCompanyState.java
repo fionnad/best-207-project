@@ -152,6 +152,7 @@ public class SearchCompanyState {
     }
 
     public void setCompanyInformation(SearchCompanyOutputData companyFinancialData) {
+        this.setCompanyTicker(companyFinancialData.getTicker());
         this.setCompanyDataFetchTime(companyFinancialData.getCompanyDataFetchTime());
         this.setCompanyEbitdaMargin(companyFinancialData.getCompanyEbitdaMargin());
         this.setCompanyEbitdaMarginComment(companyFinancialData.getCompanyEbitdaMarginComment());

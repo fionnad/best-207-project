@@ -9,9 +9,6 @@ import use_case.SearchCompany.SearchCompanyInputBoundary;
 import use_case.SearchCompany.SearchCompanyInteractor;
 
 public class SearchCompanyUseCaseFactory {
-
-    private SearchCompanyUseCaseFactory() {}
-
     public static SearchCompanyController create(SearchCompanyViewModel currentSearchCompanyViewModel, String ticker)  {
         SearchCompanyDataAccessInterface searchCompanyDataAccessInterface = new SearchCompanyDataAccessObject(ticker);
         SearchCompanyPresenter searchCompanyPresenter = new SearchCompanyPresenter(currentSearchCompanyViewModel);
