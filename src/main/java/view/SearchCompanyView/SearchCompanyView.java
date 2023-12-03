@@ -129,6 +129,14 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
         if (!state.getCompanyFrontEndState().equals("Nothing to show")) {
             JOptionPane.showMessageDialog(this, state.getCompanyFrontEndState());
         }
+        if ("fontSize".equals(e.getPropertyName())) {
+            updateUIFontSize((Integer) e.getNewValue());
+        }
+    }
+    private void updateUIFontSize(int newSize) {
+        Font newFont = new Font(getFont().getName(), getFont().getStyle(), newSize);
+        searchCompanyButton.setFont(newFont);
+        searchCompanyInputField.setFont(newFont);
     }
 
 

@@ -98,6 +98,17 @@ public class  RankingsPageView extends JPanel implements ActionListener, Propert
         rankingsPanel.revalidate();
         rankingsPanel.repaint();
 
+        if ("fontSize".equals(e.getPropertyName())) {
+            updateUIFontSize((Integer) e.getNewValue());
+        }
+
         // Show the dialog only if there is a change in company's frontend state
+    }
+    private void updateUIFontSize(int newSize) {
+        Font newFont = new Font(getFont().getName(), getFont().getStyle(), newSize);
+        // Iterate through all components and update their font
+        // For example:
+        refresh.setFont(newFont);
+        // Update other components in RankingsPageView
     }
 }

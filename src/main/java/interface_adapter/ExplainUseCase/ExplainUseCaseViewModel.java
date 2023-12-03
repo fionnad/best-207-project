@@ -1,5 +1,6 @@
 package interface_adapter.ExplainUseCase;
 
+import interface_adapter.SettingPage.GlobalFontSizeManager;
 import interface_adapter.ViewModel;
 
 
@@ -24,6 +25,11 @@ public class ExplainUseCaseViewModel extends ViewModel {
 
     public void setState(ExplainUseCaseState state) {
         this.state = state;
+        GlobalFontSizeManager.getInstance().addPropertyChangeListener(evt -> {
+            if ("fontSize".equals(evt.getPropertyName())) {
+                firePropertyChanged(); // Notify the view to update
+            }
+        });
     }
 
     public ExplainUseCaseState getState() {

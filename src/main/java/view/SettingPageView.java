@@ -1,9 +1,11 @@
 package view;
 
+import interface_adapter.SettingPage.GlobalFontSizeManager;
 import interface_adapter.SettingPage.SettingPageViewModel;
 import interface_adapter.SettingPage.SettingPageState;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class SettingPageView extends JPanel {
     private final SettingPageViewModel settingPageViewModel;
@@ -40,4 +42,13 @@ public class SettingPageView extends JPanel {
         increase.setFont(newFont);
         decrease.setFont(newFont);
     }
+    public void actionPerformed(ActionEvent e) {
+        int currentSize = GlobalFontSizeManager.getInstance().getFontSize();
+        if (e.getSource() == increase) {
+            GlobalFontSizeManager.getInstance().setFontSize(currentSize + 1);
+        } else if (e.getSource() == decrease) {
+            GlobalFontSizeManager.getInstance().setFontSize(currentSize - 1);
+        }
+    }
+
 }

@@ -1,19 +1,34 @@
 package interface_adapter.SettingPage;
 
+import interface_adapter.ViewModel;
+
 import javax.swing.event.SwingPropertyChangeSupport;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
-public class SettingPageViewModel {
+public class SettingPageViewModel extends ViewModel {
     public static final String INCREASE_BUTTON_LABEL = "Increase Font Size";
     public static final String DECREASE_BUTTON_LABEL = "Decrease Font Size";
     private static final int DEFAULT_FONT_SIZE = 12; // Set a default font size
 
     private final SwingPropertyChangeSupport propertyChangeSupport;
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
     private SettingPageState state;
 
     public SettingPageViewModel() {
+        super("Setting Page");
         this.state = new SettingPageState(DEFAULT_FONT_SIZE);
         this.propertyChangeSupport = new SwingPropertyChangeSupport(this);
+
+        GlobalFontSizeManager.getInstance().addPropertyChangeListener(evt -> {
+            if ("fontSize".equals(evt.getPropertyName())) {
+                firePropertyChanged();
+            }
+        });
+    }
+    public void firePropertyChanged() {
+        support.firePropertyChange("state", null, this.state);
     }
 
     public void increaseFontSize() {

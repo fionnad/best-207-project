@@ -1,5 +1,6 @@
 package interface_adapter.SearchCompany;
 
+import interface_adapter.SettingPage.GlobalFontSizeManager;
 import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
@@ -11,10 +12,16 @@ public class SearchCompanyViewModel extends ViewModel {
     public SearchCompanyState state = new SearchCompanyState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
+
     public String companyInformation = "Please search a company";
 
     public SearchCompanyViewModel() {
         super("Company Financial Data Search Page");
+        GlobalFontSizeManager.getInstance().addPropertyChangeListener(evt -> {
+            if ("fontSize".equals(evt.getPropertyName())) {
+                firePropertyChanged(); // Notify the view to update
+            }
+        });
     }
 
     public void firePropertyChanged() {

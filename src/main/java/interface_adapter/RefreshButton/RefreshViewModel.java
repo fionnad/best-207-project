@@ -1,6 +1,7 @@
 package interface_adapter.RefreshButton;
 
 import interface_adapter.SearchCompany.SearchCompanyState;
+import interface_adapter.SettingPage.GlobalFontSizeManager;
 import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
@@ -14,6 +15,11 @@ public class RefreshViewModel extends ViewModel {
 
     public RefreshViewModel() {
         super("Ranking");
+        GlobalFontSizeManager.getInstance().addPropertyChangeListener(evt -> {
+            if ("fontSize".equals(evt.getPropertyName())) {
+                firePropertyChanged(); // Notify the view to update
+            }
+        });
     }
 
     public void firePropertyChanged() {

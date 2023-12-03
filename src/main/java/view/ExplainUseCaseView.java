@@ -58,6 +58,15 @@ public class ExplainUseCaseView extends JPanel implements PropertyChangeListener
             String definition = state.getDefinitionForCurrentTerm();
             definitionsTextArea.setText(definition);
         }
+        if ("fontSize".equals(evt.getPropertyName())) {
+            updateUIFontSize((Integer) evt.getNewValue());
+        }
+    }
+    private void updateUIFontSize(int newSize) {
+        Font newFont = new Font(getFont().getName(), getFont().getStyle(), newSize);
+        definitionsTextArea.setFont(newFont);
+        termButtons.values().forEach(button -> button.setFont(newFont));
+        // Update other components in ExplainUseCaseView
     }
 
 }
