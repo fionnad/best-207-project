@@ -21,7 +21,6 @@ public class CompanyDataFactory {
                 return createNullCompany(ticker);
             } else {
                 HashMap<String, Object> finJsonData = extractCompanyFinInfo((JSONObject) finJSONObject.get("body"), (JSONObject) eventJSONObject.get("body"));
-                System.out.println(finJsonData);
                 return createNewCompany(ticker, finJsonData);
             }
         } catch (ParseException e) {
@@ -119,7 +118,7 @@ public class CompanyDataFactory {
         Object exDividendDateObject =  jsonObject.get("exDividendDate");
         eventDataHashMap.put("earningsDate", (String) earningsDateObject.get("fmt"));
 
-        if (nullCheck(dividendDateObject)) {
+        if (nullCheckFinData(dividendDateObject)) {
             eventDataHashMap.put("dividendDate", "N/A");
         }
 
@@ -128,7 +127,7 @@ public class CompanyDataFactory {
             eventDataHashMap.put("dividendDate", (String) dividendDateJSONObject.get("fmt"));
         }
 
-        if (nullCheck(exDividendDateObject)) {
+        if (nullCheckFinData(exDividendDateObject)) {
             eventDataHashMap.put("earningsDate", "N/A");
         }
         else {
