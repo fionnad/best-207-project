@@ -16,8 +16,10 @@ public class SearchCompanyInteractor implements SearchCompanyInputBoundary {
         if (finDataInfo.isValidCompany()) {
             SearchCompanyOutputData searchCompanyOutputData = new SearchCompanyOutputData(finDataInfo);
             searchCompanyOutputBoundary.prepareSuccessView(searchCompanyOutputData);
+        } else if (finDataInfo.getTicker().equals("") || finDataInfo.getTicker().equals("\b")) {
+            searchCompanyOutputBoundary.prepareEmptySearchView();
         } else {
-            searchCompanyOutputBoundary.prepareFailView();
+            searchCompanyOutputBoundary.prepareInvalidFindView();
         }
     }
 }
