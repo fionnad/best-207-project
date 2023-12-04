@@ -48,42 +48,28 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
             reader = new BufferedReader(new FileReader(txtFile));
             lineReader = new BufferedReader(new FileReader(txtFile));
             String row;
-
-
-
             while (lineReader.readLine() != null) {
                 totalLineCount += 1;
             }
-
-
             while ((row = reader.readLine()) != null) {
                 companyData = getParsedFinData(row);
-
                 lineCount += 1;
                 System.out.println(lineCount/totalLineCount*100);
-
                 Double count = 0.0;
                 for (Double i : companyData.getAllFinData()) {
-
                     if (i == null) {
                         count += 0;
                     }
                     else {
                         count += i;
                     }
-
                 }
-
-
                 Double companyAverage = (count/6);
-
                 companies.put(companyAverage, companyData);
-
             }
             reader.close();
 
             TreeMap<Double, CompanyData> sortedHashMap = sortbykey();
-
             writer = new BufferedWriter(new FileWriter(csvFile));
             writer.write(String.join(",", headers.keySet()));
             writer.newLine();
@@ -100,22 +86,16 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
                 writer.write(line);
                 writer.newLine();
             }
-
             writer.close();
-
             int i = 0;
             String[] top5 = new String[5];
             Iterator<Map.Entry<Double, CompanyData>> iterator = sortedHashMap.entrySet().iterator();
             while (iterator.hasNext() && i < 5) {
-
                 Map.Entry<Double, CompanyData> entry = iterator.next();
-//                String key = entry.getKey();
-//                String value = entry.getValue();
                 top5[i] = entry.getValue().getTicker();
                 i++;
             }
             return top5;
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
