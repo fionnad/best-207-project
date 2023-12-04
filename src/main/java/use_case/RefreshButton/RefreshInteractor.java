@@ -12,6 +12,7 @@ public class RefreshInteractor {
         this.refreshOutputBoundary = refreshOutputBoundary;
     }
     public void execute() {
+      
         ArrayList<String[]> tickers = refreshDataAccessObject.refresh();
         if (tickers != null) {
             LocalDateTime now = LocalDateTime.now();

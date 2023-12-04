@@ -6,6 +6,7 @@ public class RefreshState {
 
     private String refreshError = "Refresh Error";
     private String timeOfRefresh = "Refreshed at";
+
     private String refreshStatus = null;
     public String[] company1 = new String[] {null, null, null, null, null};
     public String[] company2 = new String[] {null, null, null, null, null};
@@ -16,7 +17,9 @@ public class RefreshState {
 
 
     public RefreshState(RefreshState copy) {
+
         this.refreshError = copy.refreshError;
+
 
         this.refreshStatus = copy.refreshStatus;
     }
@@ -34,8 +37,10 @@ public class RefreshState {
     }
 
 
+
     public void setRefreshError(String refreshError) {this.refreshError = refreshError;}
     public void setRefreshTime(String time) {this.timeOfRefresh = time;}
+
 
     public void setRefreshStatus(String status) {this.refreshStatus = status;}
 

@@ -46,43 +46,29 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
             reader = new BufferedReader(new FileReader(txtFile));
             lineReader = new BufferedReader(new FileReader(txtFile));
             String row;
-
-
-
             while (lineReader.readLine() != null) {
                 totalLineCount += 1;
             }
-
-
             while ((row = reader.readLine()) != null) {
                 companyData = getParsedFinData(row);
-
                 lineCount += 1;
                 System.out.println(lineCount/totalLineCount*100);
-
                 Double count = 0.0;
                 for (Double i : companyData.getAllFinData()) {
-
                     if (i == null) {
                         count += 0;
                     }
                     else {
                         count += i;
                     }
-
                 }
-
-
                 Double companyAverage = (count/6);
-
                 companies.put(companyAverage, companyData);
-
             }
             reader.close();
             lineReader.close();
 
             TreeMap<Double, CompanyData> sortedHashMap = sortbykey();
-
             writer = new BufferedWriter(new FileWriter(csvFile));
             writer.write(String.join(",", headers.keySet()));
             writer.newLine();
@@ -96,7 +82,6 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
                 writer.write(line);
                 writer.newLine();
             }
-
             writer.close();
 
 //            int i = 0;
@@ -130,11 +115,11 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
             while ((row = reader.readLine()) != null | i < 5) {
                 String[] companystuff = row.split(",");
                 top5.add(companystuff);
+
                 i++;
             }
 
             return top5;
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

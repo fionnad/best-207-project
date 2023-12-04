@@ -1,5 +1,6 @@
-package use_case.RefreshButton;
+package view;
 
+import app.RankingsPageUseCaseFactory;
 import data_access.RefreshDataAccessObject;
 import entities.CompanyDataFactory;
 import interface_adapter.RefreshButton.RefreshController;
@@ -7,19 +8,22 @@ import interface_adapter.RefreshButton.RefreshPresenter;
 import interface_adapter.RefreshButton.RefreshViewModel;
 import interface_adapter.ViewManagerModel;
 import org.junit.jupiter.api.Test;
+import use_case.RefreshButton.RefreshInteractor;
+import use_case.RefreshButton.RefreshOutputBoundary;
 
+import javax.swing.*;
 import java.io.IOException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class RefreshInteractorTest {
+class RankingsPageViewTest {
     @Test
-    public void testRefreshInteractorSuccess() {
-
+    public void testView() {
         RefreshDataAccessObject refreshDataAccessObject;
 
         try {
-            refreshDataAccessObject = new RefreshDataAccessObject("./Tickers.csv","./Tickers.txt", new CompanyDataFactory());
+            refreshDataAccessObject = new RefreshDataAccessObject("./TestTickers.csv","./TestTickers.txt", new CompanyDataFactory());
         }
         catch (
                 IOException e) {
@@ -33,9 +37,12 @@ public class RefreshInteractorTest {
         RefreshOutputBoundary refreshOutputBoundary = new RefreshPresenter(refreshViewModel, viewManagerModel);
         RefreshInteractor refreshInteractor = new RefreshInteractor(refreshDataAccessObject, refreshOutputBoundary);
         RefreshController refreshController = new RefreshController(refreshInteractor);
-
+        JPanel refreshView = RankingsPageUseCaseFactory.create(viewManagerModel, refreshViewModel, refreshDataAccessObject);
+        JFrame jf = new JFrame();
+        jf.setContentPane(refreshView);
+        jf.pack();
+        jf.setVisible(true);
         refreshController.execute();
-
         assertEquals("Successful Refresh", refreshViewModel.getState().getRefreshStatus());
     }
 
