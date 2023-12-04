@@ -7,7 +7,6 @@ public class SearchCompanyController {
     public SearchCompanyController(SearchCompanyInputBoundary userSearchCompanyUseCaseInteractor) {
         this.userSearchCompanyUseCaseInteractor = userSearchCompanyUseCaseInteractor;
     }
-
     public void execute() {
         userSearchCompanyUseCaseInteractor.execute();
     }

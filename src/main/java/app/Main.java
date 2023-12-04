@@ -8,44 +8,46 @@ import interface_adapter.RefreshButton.RefreshViewModel;
 import interface_adapter.SearchCompany.SearchCompanyViewModel;
 import view.ExplainUseCaseView;
 import view.RankingsPageView;
-import view.SearchCompanyView.SearchCompanyView;
+import view.SearchCompanyView;
 import interface_adapter.ViewManagerModel;
-import view.ViewManager;
+import view.Utilities.CreateTheme;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
+
+import static view.Utilities.PaddedJPanel.createPaddedPanel;
 
 public class Main {
     public static void main(String[] args) {
-        // Build the main program window, the main panel containing the
-        // various cards, and the layout, and stitch them together.
+        // Setting theme
+        CreateTheme.setTheme();
 
-        // The main application window.
+        // Main application window
         JFrame application = new JFrame("best-207-project");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        application.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        CardLayout cardLayout = new CardLayout();
+        // Panel projected unto the front screen
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        application.add(mainPanel);
 
-        // The various View objects. Only one view is visible at a time.
-        JPanel views = new JPanel(cardLayout);
-        application.add(views);
+        // The tabbed pane for switching between pages
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+        mainPanel.add(tabbedPane, BorderLayout.CENTER);
 
+        // ViewManager to manage switching between pages
         ViewManagerModel viewManagerModel = new ViewManagerModel();
-        new ViewManager(views, cardLayout, viewManagerModel);
 
-        // The data for the views are in the ViewModels.
-        // This information will be changed by a presenter object that is reporting the
-        // results from the use case. The ViewModels are observable, and will
-        // be observed by the Views.
+        // Creating Pages
         RefreshViewModel refreshViewModel = new RefreshViewModel();
         SearchCompanyViewModel searchCompanyViewModel = new SearchCompanyViewModel();
         ExplainUseCaseViewModel explainUseCaseViewModel = new ExplainUseCaseViewModel();
 
+        // Initiate Refresh DAO on start
         RefreshDataAccessObject refreshDataAccessObject;
-
         try {
             refreshDataAccessObject = new RefreshDataAccessObject("./Tickers.csv","./Tickers.txt", new CompanyDataFactory());
         }
@@ -58,34 +60,15 @@ public class Main {
         SearchCompanyView searchCompanyView = new SearchCompanyView(searchCompanyViewModel);
         ExplainUseCaseView explainUseCaseView = new ExplainUseCaseView(explainUseCaseViewModel);
 
-        //Add the pages to the JPanel
-        views.add(rankingsPageView);
-        views.add(searchCompanyView);
-        views.add(explainUseCaseView);
+        // Add the pages to the tabs
+        tabbedPane.addTab("Daily Rankings", createPaddedPanel(rankingsPageView, 30, 30));
+        tabbedPane.addTab("Search A Company", createPaddedPanel(searchCompanyView, 30, 30));
+        tabbedPane.addTab("Definitions", createPaddedPanel(explainUseCaseView, 30, 30));
 
-        JButton nextView = new JButton("Next Page");
+        // Execute refresh
+//        refreshDataAccessObject.refresh();
 
-        nextView.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed (ActionEvent e) {
-                        CardLayout cardLayout1 = (CardLayout)(views.getLayout());
-                        cardLayout1.next(views);
-                    }
-                });
-
-        Container pane1 = application.getContentPane();
-        pane1.add(views, BorderLayout.WEST);
-
-        JPanel nextbtnPanel = new JPanel();
-        nextbtnPanel.add(nextView);
-        pane1.add(nextbtnPanel, BorderLayout.SOUTH);
-
-        refreshDataAccessObject.refresh();
-
-        application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         application.pack();
         application.setVisible(true);
-
     }
 }

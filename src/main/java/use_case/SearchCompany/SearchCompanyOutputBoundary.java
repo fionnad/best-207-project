@@ -2,5 +2,6 @@ package use_case.SearchCompany;
 
 public interface SearchCompanyOutputBoundary {
     void prepareSuccessView(SearchCompanyOutputData companyFinancialData);
-    void prepareFailView();
+    void prepareInvalidFindView();
+    void prepareEmptySearchView();
 }

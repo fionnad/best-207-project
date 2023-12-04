@@ -10,9 +10,6 @@ public class SearchCompanyViewModel extends ViewModel {
     public static final String SEARCH_LABEL = "Find:";
     public SearchCompanyState state = new SearchCompanyState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-
-    public String companyInformation = "Please search a company";
-
     public SearchCompanyViewModel() {
         super("Company Financial Data Search Page");
     }
