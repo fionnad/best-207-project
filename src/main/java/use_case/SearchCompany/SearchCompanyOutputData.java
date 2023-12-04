@@ -1,6 +1,9 @@
 package use_case.SearchCompany;
 
+import data_access.NumberFormatterService;
 import entities.CompanyData;
+
+import java.text.DecimalFormat;
 
 public class SearchCompanyOutputData {
     public String ticker;
@@ -18,9 +21,12 @@ public class SearchCompanyOutputData {
     public String companyFreeCashFlowPerShareComment;
     public String companyFreeCashFlowYield;
     public String companyFreeCashFlowYieldComment;
-    public String earningsDate;
-    public String dividendDate;
-    public String exDividendDate;
+    public String companyEarningsDate; // Updated variable name for earnings date
+    public String companyDividendDate; // Updated variable name for dividend date
+    public String companyExDividendDate; // Updated variable name for ex-dividend date
+    public String companyCurrentPrice; // Added variable for current price
+    public String companyTotalSharesOutstanding; // Added variable for total shares outstanding
+    public String companyMarketCapitalization;
 
     public SearchCompanyOutputData(CompanyData companyFinancialData) {
         this.ticker = companyFinancialData.getTicker();
@@ -38,14 +44,19 @@ public class SearchCompanyOutputData {
         this.companyFreeCashFlowPerShareComment = validator(companyFinancialData.getFreeCashFlowPerShareAnalysis());
         this.companyFreeCashFlowYield = validator(companyFinancialData.getFreeCashFlowYield());
         this.companyFreeCashFlowYieldComment = validator(companyFinancialData.getFreeCashFlowYieldAnalysis());
-        this.earningsDate = companyFinancialData.getEarningsDate();
-        this.dividendDate = companyFinancialData.getDividendDate();
-        this.exDividendDate = companyFinancialData.getExDividendDate();
+        this.companyEarningsDate = validator(companyFinancialData.getEarningsDate());
+        this.companyDividendDate = validator(companyFinancialData.getDividendDate());
+        this.companyExDividendDate = validator(companyFinancialData.getExDividendDate());
+        this.companyCurrentPrice = validator(companyFinancialData.getCurrentPrice());
+        this.companyTotalSharesOutstanding = validator(companyFinancialData.getTotalSharesOutstanding());
+        this.companyMarketCapitalization = validator(companyFinancialData.getMarketCapitalization());
     }
 
     public String validator(Object object) {
         if (object == null) {
             return "No data";
+        } else if (object instanceof Number) {
+            return NumberFormatterService.formatNumber(object);
         } else {
             return object.toString();
         }
@@ -99,19 +110,26 @@ public class SearchCompanyOutputData {
     }
 
     public String getEarningsDate() {
-        return earningsDate;
+        return this.companyEarningsDate;
     }
 
     public String getDividendDate() {
-        return dividendDate;
+        return this.companyDividendDate;
     }
 
     public String getExDividendDate() {
-        return exDividendDate;
+        return this.companyExDividendDate;
     }
 
-    public void setCompanyDataFetchTime(String companyDataFetchTime) {
-        this.companyDataFetchTime = companyDataFetchTime;
+    public String getCompanyCurrentPrice() {
+        return this.companyCurrentPrice;
     }
 
+    public String getCompanyTotalSharesOutstanding() {
+        return this.companyTotalSharesOutstanding;
+    }
+
+    public String getCompanyMarketCapitalization() {
+        return this.companyMarketCapitalization;
+    }
 }

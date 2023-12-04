@@ -31,8 +31,6 @@ public class CompanyData {
     public final String dividendDate;
     public final String exDividendDate;
 
-
-
     public CompanyData(boolean isValidCompany, String ticker, String timeFetched, Double currentPrice,
                        Long freeCashFlow, Long totalRevenue, Double revenuePerShare, Double totalSharesOutstanding,
                        Double marketCapitalization, Double ebitdaMargins, String ebitdaMarginsAnalysis,
@@ -67,7 +65,6 @@ public class CompanyData {
         this.exDividendDate = exDividendDate;
     }
 
-    // Getters for fields
     public boolean isValidCompany() {
         return isValidCompany;
     }

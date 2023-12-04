@@ -4,6 +4,9 @@ import use_case.SearchCompany.SearchCompanyOutputData;
 public class SearchCompanyState {
     public String companyTicker = "";
     public String companyFrontEndState = "Nothing to show";
+    public String companyCurrentPrice = null;
+    public String companyTotalSharesOutstanding = null;
+    public String companyMarketCapitalization = null;
     public String companyDataFetchTime = null;
     public String companyEbitdaMargin = null;
     public String companyEbitdaMarginComment = null;
@@ -21,14 +24,19 @@ public class SearchCompanyState {
     public String dividendDate = null;
     public String exDividendDate = null;
 
-    public SearchCompanyState(SearchCompanyState copy) {
-        companyTicker = copy.companyTicker;
-    }
-
     public SearchCompanyState() {}
 
     public String getCompanyTicker() {
         return companyTicker;
+    }
+    public String getCompanyCurrentPrice() {
+        return companyCurrentPrice;
+    }
+    public String getCompanyTotalSharesOutstanding() {
+        return companyTotalSharesOutstanding;
+    }
+    public String getCompanyMarketCapitalization() {
+        return companyMarketCapitalization;
     }
     public String getCompanyFrontEndState() {
         return this.companyFrontEndState;
@@ -96,6 +104,18 @@ public class SearchCompanyState {
         this.companyDataFetchTime = newCompanyDataFetchTime;
     }
 
+    public void setCompanyCurrentPrice(String newCompanyCurrentPrice) {
+        this.companyCurrentPrice = newCompanyCurrentPrice;
+    }
+
+    public void setCompanyTotalSharesOutstanding(String newCompanyTotalSharesOutstanding) {
+        this.companyTotalSharesOutstanding = newCompanyTotalSharesOutstanding;
+    }
+
+    public void setCompanyMarketCapitalization(String newCompanyMarketCapitalization) {
+        this.companyMarketCapitalization = newCompanyMarketCapitalization;
+    }
+
     public void setCompanyEbitdaMargin(String newCompanyEbitdaMargin) {
         this.companyEbitdaMargin = newCompanyEbitdaMargin;
     }
@@ -153,6 +173,9 @@ public class SearchCompanyState {
 
     public void setCompanyInformation(SearchCompanyOutputData companyFinancialData) {
         this.setCompanyTicker(companyFinancialData.getTicker());
+        this.setCompanyCurrentPrice(companyFinancialData.getCompanyCurrentPrice());
+        this.setCompanyTotalSharesOutstanding(companyFinancialData.getCompanyTotalSharesOutstanding());
+        this.setCompanyMarketCapitalization(companyFinancialData.getCompanyMarketCapitalization());
         this.setCompanyDataFetchTime(companyFinancialData.getCompanyDataFetchTime());
         this.setCompanyEbitdaMargin(companyFinancialData.getCompanyEbitdaMargin());
         this.setCompanyEbitdaMarginComment(companyFinancialData.getCompanyEbitdaMarginComment());
