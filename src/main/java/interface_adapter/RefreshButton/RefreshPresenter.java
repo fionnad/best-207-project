@@ -29,11 +29,4 @@ public class RefreshPresenter implements RefreshOutputBoundary {
         refreshViewModel.firePropertyChanged();
     }
 
-    @Override
-    public void prepareFailView() {
-        RefreshState refreshState = refreshViewModel.getState();
-        refreshState.setRefreshError("Refresh Failed");
-        refreshState.setRefreshStatus("Refresh Failed");
-        refreshViewModel.firePropertyChanged();
-    }
 }

@@ -2,8 +2,6 @@ package interface_adapter.RefreshButton;
 
 public class RefreshState {
 
-    private String refreshError = "Refresh Error";
-
     private String refreshSuccess = "Refresh Success";
 
     private String refreshStatus = null;
@@ -16,7 +14,6 @@ public class RefreshState {
 
 
     public RefreshState(RefreshState copy) {
-        this.refreshError = copy.refreshError;
         this.refreshSuccess = copy.refreshSuccess;
         this.refreshStatus = copy.refreshStatus;
     }
@@ -34,7 +31,7 @@ public class RefreshState {
     }
 
 
-    public void setRefreshError(String refreshError) {this.refreshError = refreshError;}
+
     public void setRefreshSuccess(String refreshSuccess) {this.refreshSuccess = refreshSuccess;}
 
     public void setRefreshStatus(String status) {this.refreshStatus = status;}
