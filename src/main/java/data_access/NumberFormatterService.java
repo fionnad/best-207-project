@@ -13,12 +13,12 @@ public class NumberFormatterService {
                 return ((int) (number / 1_000_000_000)) + " Billion";
             } else if (number >= 1_000_000_000_000L) {
                 return ((int) (number / 1_000_000_000_000L)) + " Trillion";
-            }else {
+            } else {
                 DecimalFormat decimalFormat = new DecimalFormat("#.##");
                 return decimalFormat.format(number);
             }
         } else {
-            return "Not a Number";
+            return "No Data";
         }
     }
 }
