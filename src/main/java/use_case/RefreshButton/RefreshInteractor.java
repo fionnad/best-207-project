@@ -1,5 +1,7 @@
 package use_case.RefreshButton;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 public class RefreshInteractor {
 
     final RefreshDataAccessInterface refreshDataAccessObject;
@@ -10,7 +12,7 @@ public class RefreshInteractor {
         this.refreshOutputBoundary = refreshOutputBoundary;
     }
     public void execute() {
-        String[] tickers = refreshDataAccessObject.refresh();
+        ArrayList<String[]> tickers = refreshDataAccessObject.refresh();
         if (tickers != null) {
             LocalDateTime now = LocalDateTime.now();
             RefreshOutputData refreshOutputData = new RefreshOutputData(now.toString(), tickers);

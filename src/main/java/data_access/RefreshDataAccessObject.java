@@ -6,6 +6,7 @@ import entities.CompanyDataFactory;
 import use_case.RefreshButton.RefreshDataAccessInterface;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -21,14 +22,11 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
         csvFile = new File(csvPath);
         txtFile = new File(txtPath);
 
-        headers.put("Symbol", 0);
+        headers.put("Ticker", 0);
         headers.put("Ranking Value", 1);
-        headers.put("Debt To Equity", 2);
-        headers.put("Ebitda Margin", 3);
-        headers.put("Revenue Growth", 4);
-        headers.put("Free Cashflow Margin", 5);
-        headers.put("Free Cashflow Per Share", 6);
-        headers.put("Free Cashflow Yield", 7);
+        headers.put("Current Price", 2);
+        headers.put("Market Capitalization", 3);
+        headers.put("Shares Outstanding", 4);
     }
 
     public CompanyData getParsedFinData(String ticker) {
@@ -36,7 +34,7 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
     }
 
     @Override
-    public String[] refresh() {
+    public ArrayList<String[]> refresh() {
         BufferedWriter writer;
         BufferedReader reader;
         CompanyData companyData;
@@ -81,6 +79,7 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
 
             }
             reader.close();
+            lineReader.close();
 
             TreeMap<Double, CompanyData> sortedHashMap = sortbykey();
 
@@ -88,32 +87,52 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
             writer.write(String.join(",", headers.keySet()));
             writer.newLine();
             for (Map.Entry<Double, CompanyData> companyData2 : sortedHashMap.entrySet()) {
-                String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s",
-                        companyData2.getValue().getTicker() ,
+                String line = String.format("%s,%s,%s,%s,%s",
+                        companyData2.getValue().getTicker(),
                         companyData2.getKey(),
-                        companyData2.getValue().getDebtToEquity(),
-                        companyData2.getValue().getEbitdaMargins(),
-                        companyData2.getValue().getRevenueGrowth(),
-                        companyData2.getValue().getFreeCashFlowMargin(),
-                        companyData2.getValue().getFreeCashFlowPerShare(),
-                        companyData2.getValue().getFreeCashFlowYield());
+                        companyData2.getValue().getCurrentPrice(),
+                        NumberFormatterService.formatNumber(companyData2.getValue().getMarketCapitalization()),
+                        NumberFormatterService.formatNumber(companyData2.getValue().getTotalSharesOutstanding()));
                 writer.write(line);
                 writer.newLine();
             }
 
             writer.close();
 
-            int i = 0;
-            String[] top5 = new String[5];
-            Iterator<Map.Entry<Double, CompanyData>> iterator = sortedHashMap.entrySet().iterator();
-            while (iterator.hasNext() && i < 5) {
+//            int i = 0;
+//            String[] top5 = new String[5];
+//            Iterator<Map.Entry<Double, CompanyData>> iterator = sortedHashMap.entrySet().iterator();
+//            while (iterator.hasNext() && i < 5) {
+//
+//                Map.Entry<Double, CompanyData> entry = iterator.next();
+////                String key = entry.getKey();
+////                String value = entry.getValue();
+//                top5[i] = entry.getValue().getTicker();
+//                i++;
+//            }
+//            return top5;
+            return update();
 
-                Map.Entry<Double, CompanyData> entry = iterator.next();
-//                String key = entry.getKey();
-//                String value = entry.getValue();
-                top5[i] = entry.getValue().getTicker();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<String[]> update() {
+        BufferedReader reader;
+
+        try {
+            reader = new BufferedReader(new FileReader(csvFile));
+            reader.readLine();
+            String row;
+            int i = 0;
+            ArrayList<String[]> top5 = new ArrayList<>();
+            while ((row = reader.readLine()) != null | i < 5) {
+                String[] companystuff = row.split(",");
+                top5.add(companystuff);
                 i++;
             }
+
             return top5;
 
         } catch (IOException e) {
