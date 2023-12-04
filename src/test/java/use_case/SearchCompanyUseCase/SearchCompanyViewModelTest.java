@@ -36,7 +36,7 @@ public class SearchCompanyViewModelTest {
 
         // Testing to ensure all data exists in CompanyData Class
         assertEquals("PEP", searchCompanyViewModel.getState().getCompanyTicker());
-        assertEquals("Valid Company", searchCompanyViewModel.getState().getCompanyFrontEndState());
+        assertEquals("Search Complete", searchCompanyViewModel.getState().getCompanyFrontEndState());
         assertNotNull(searchCompanyViewModel.getState().getCompanyFrontEndState());
         assertNotNull(searchCompanyViewModel.getState().getCompanyDataFetchTime());
         assertNotNull(searchCompanyViewModel.getState().getCompanyEbitdaMargin());
@@ -125,7 +125,7 @@ public class SearchCompanyViewModelTest {
 
         // Testing to ensure all data exists in CompanyData Class
         assertEquals("", searchCompanyViewModel.getState().getCompanyTicker());
-        assertEquals("Invalid company, please search again.", searchCompanyViewModel.getState().getCompanyFrontEndState());
+        assertEquals("Nothing was searched!", searchCompanyViewModel.getState().getCompanyFrontEndState());
         assertNull(searchCompanyViewModel.getState().getCompanyDataFetchTime());
         assertNull(searchCompanyViewModel.getState().getCompanyEbitdaMargin());
         assertNull(searchCompanyViewModel.getState().getCompanyEbitdaMarginComment());

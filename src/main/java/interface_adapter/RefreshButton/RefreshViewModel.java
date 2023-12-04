@@ -24,10 +24,6 @@ public class RefreshViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
-    public void setState(RefreshState state) {
-        this.state = state;
-    }
-
     public RefreshState getState() {
         return state;
     }

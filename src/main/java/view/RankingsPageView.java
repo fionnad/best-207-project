@@ -9,6 +9,7 @@ import interface_adapter.SearchCompany.SearchCompanyState;
 import interface_adapter.SearchCompany.SearchCompanyViewModel;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -53,24 +54,52 @@ public class  RankingsPageView extends JPanel implements ActionListener, Propert
             throw new RuntimeException(e);
         }
 
-        //Updates the view on startup
+        // Updates the view on startup
         ArrayList<String[]> oldData = refreshDataAccessObject.update();
 
-        JLabel currentFinancialDataLabel = new JLabel(
-                "<html>Rankings:" +
-                        "<br>#1. " + oldData.get(0)[0] + oldData.get(0)[2] + oldData.get(0)[3] + oldData.get(0)[4] +
-//
-                        "<br>#2. " + oldData.get(1)[0] + oldData.get(1)[2] + oldData.get(1)[3] + oldData.get(1)[4] +
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("Rank");
+        tableModel.addColumn("Company");
+        tableModel.addColumn("Current Stock Price");
+        tableModel.addColumn("Market Capitalization");
+        tableModel.addColumn("Shares Outstanding");
+        tableModel.addColumn("Total Revenue");
+        tableModel.addColumn("Revenue Growth");
+        tableModel.addColumn("EBITDA Margins");
+        tableModel.addColumn("Debt/Equity Ratio");
+        tableModel.addColumn("FCF Margin");
 
-                        "<br>#3. " + oldData.get(2)[0] + oldData.get(2)[2] + oldData.get(2)[3] + oldData.get(2)[4] +
+        // Populate the table model with initial data
+        for (int i = 0; i < oldData.size(); i++) {
+            String[] rowData = oldData.get(i);
+            tableModel.addRow(new Object[]{i + 1,
+                    rowData[0],
+                    rowData[2],
+                    rowData[3],
+                    rowData[4],
+                    rowData[5],
+                    rowData[6],
+                    rowData[7],
+                    rowData[8],
+                    rowData[9]});
+        }
 
-                        "<br>#4. " + oldData.get(3)[0] + oldData.get(3)[2] + oldData.get(3)[3] + oldData.get(3)[4] +
+        // Creating table
+        JTable rankingsTable = new JTable(tableModel);
+        rankingsTable.setRowHeight(30);
 
-                        "<br>#5. " + oldData.get(4)[0] + oldData.get(4)[2] + oldData.get(0)[3] + oldData.get(4)[4] +
+        // Creating scroll feature
+        JScrollPane tableScrollPane = new JScrollPane(rankingsTable);
+        tableScrollPane.setPreferredSize(new Dimension(400, 200));
+        rankingsTable.getColumnModel().getColumn(0).setPreferredWidth(27);
+        rankingsTable.getColumnModel().getColumn(1).setPreferredWidth(120);
+        rankingsTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        rankingsTable.getColumnModel().getColumn(3).setPreferredWidth(90);
 
-                        "</html>"
-        );
-        rankingsPanel.add(currentFinancialDataLabel);
+        // Clear existing components in rankingsPanel and add the tableScrollPane
+        rankingsPanel.removeAll();
+        rankingsPanel.setLayout(new BorderLayout());
+        rankingsPanel.add(tableScrollPane, BorderLayout.CENTER);
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -90,15 +119,13 @@ public class  RankingsPageView extends JPanel implements ActionListener, Propert
                     }
                 }
         );
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         this.add(mainPanel);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        ;
     }
 
     public void propertyChange(PropertyChangeEvent e) {
@@ -107,28 +134,51 @@ public class  RankingsPageView extends JPanel implements ActionListener, Propert
 
         RefreshState state = (RefreshState) e.getNewValue();
 
-        // Instead of printing to the console, update the JLabel with the new information
-        JLabel financialDataLabel = new JLabel(
-                "<html>Rankings:" +
-                        "<br>#1. " + state.getRefreshSuccess().get(0)[0] + state.getRefreshSuccess().get(0)[2] + state.getRefreshSuccess().get(0)[3] + state.getRefreshSuccess().get(0)[4] +
-//
-                        "<br>#2. " + state.getRefreshSuccess().get(1)[0] + state.getRefreshSuccess().get(1)[2] + state.getRefreshSuccess().get(1)[3] + state.getRefreshSuccess().get(1)[4] +
+        ArrayList<String[]> newData = state.getRefreshSuccess();
 
-                        "<br>#3. " + state.getRefreshSuccess().get(2)[0] + state.getRefreshSuccess().get(2)[2] + state.getRefreshSuccess().get(2)[3] + state.getRefreshSuccess().get(2)[4] +
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("Rank");
+        tableModel.addColumn("Company");
+        tableModel.addColumn("Current Stock Price");
+        tableModel.addColumn("Market Capitalization");
+        tableModel.addColumn("Shares Outstanding");
+        tableModel.addColumn("Total Revenue");
+        tableModel.addColumn("Revenue Growth");
+        tableModel.addColumn("EBITDA Margins");
+        tableModel.addColumn("Debt/Equity Ratio");
+        tableModel.addColumn("FCF Margin");
 
-                        "<br>#4. " + state.getRefreshSuccess().get(3)[0] + state.getRefreshSuccess().get(3)[2] + state.getRefreshSuccess().get(3)[3] + state.getRefreshSuccess().get(3)[4] +
+        // Populate the table model with initial data
+        for (int i = 0; i < newData.size(); i++) {
+            String[] rowData = newData.get(i);
+            tableModel.addRow(new Object[]{i + 1,
+                    rowData[0],
+                    rowData[2],
+                    rowData[3],
+                    rowData[4],
+                    rowData[5],
+                    rowData[6],
+                    rowData[7],
+                    rowData[8],
+                    rowData[9]});
+        }
 
-                        "<br>#5. " + state.getRefreshSuccess().get(4)[0] + state.getRefreshSuccess().get(4)[2] + state.getRefreshSuccess().get(0)[3] + state.getRefreshSuccess().get(4)[4] +
+        // Creating table
+        JTable rankingsTable = new JTable(tableModel);
+        rankingsTable.setRowHeight(30);
 
-                        "</html>"
-        );
+        // Creating scroll feature
+        JScrollPane tableScrollPane = new JScrollPane(rankingsTable);
+        tableScrollPane.setPreferredSize(new Dimension(400, 200));
+        rankingsTable.getColumnModel().getColumn(0).setPreferredWidth(27);
+        rankingsTable.getColumnModel().getColumn(1).setPreferredWidth(120);
+        rankingsTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        rankingsTable.getColumnModel().getColumn(3).setPreferredWidth(90);
 
-        // Add the updated label to the panel
-        rankingsPanel.add(financialDataLabel);
-
-        // Revalidate and repaint the panel to reflect the changes
-        rankingsPanel.revalidate();
-        rankingsPanel.repaint();
+        // Clear existing components in rankingsPanel and add the tableScrollPane
+        rankingsPanel.removeAll();
+        rankingsPanel.setLayout(new BorderLayout()); // Set BorderLayout for rankingsPanel
+        rankingsPanel.add(tableScrollPane, BorderLayout.CENTER);
 
         // Show the dialog only if there is a change in company's frontend state
     }

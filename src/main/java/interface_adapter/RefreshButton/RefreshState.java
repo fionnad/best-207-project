@@ -3,8 +3,6 @@ package interface_adapter.RefreshButton;
 import java.util.ArrayList;
 
 public class RefreshState {
-
-    private String refreshError = "Refresh Error";
     private String timeOfRefresh = "Refreshed at";
 
     private String refreshStatus = null;
@@ -15,18 +13,7 @@ public class RefreshState {
     public String[] company5 = new String[] {null, null, null, null, null};
 
 
-
-    public RefreshState(RefreshState copy) {
-
-        this.refreshError = copy.refreshError;
-
-
-        this.refreshStatus = copy.refreshStatus;
-    }
-
-    public RefreshState() {
-
-    }
+    public RefreshState() {}
 
     public void setCompanyInfo(ArrayList<String[]> tickers) {
         this.company1 = tickers.get(0);
@@ -36,11 +23,7 @@ public class RefreshState {
         this.company5 = tickers.get(4);
     }
 
-
-
-    public void setRefreshError(String refreshError) {this.refreshError = refreshError;}
     public void setRefreshTime(String time) {this.timeOfRefresh = time;}
-
 
     public void setRefreshStatus(String status) {this.refreshStatus = status;}
 

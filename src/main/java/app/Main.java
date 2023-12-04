@@ -35,7 +35,7 @@ public class Main {
 
         // The tabbed pane for switching between pages
         JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+        tabbedPane.setBorder(new EmptyBorder(20, 10, 10, 10));
         mainPanel.add(tabbedPane, BorderLayout.CENTER);
 
         // ViewManager to manage switching between pages
@@ -55,6 +55,7 @@ public class Main {
                 IOException e) {
             throw new RuntimeException(e);
         }
+
 
         RankingsPageView rankingsPageView = RankingsPageUseCaseFactory.create(viewManagerModel, refreshViewModel, refreshDataAccessObject);
         SearchCompanyView searchCompanyView = new SearchCompanyView(searchCompanyViewModel);

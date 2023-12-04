@@ -27,6 +27,11 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
         headers.put("Current Price", 2);
         headers.put("Market Capitalization", 3);
         headers.put("Shares Outstanding", 4);
+        headers.put("Total Revenue", 5);
+        headers.put("Revenue Growth", 6);
+        headers.put("EBITDA Margins", 7);
+        headers.put("Debt/Equity Ratio", 8);
+        headers.put("FCF Margin", 9);
     }
 
     public CompanyData getParsedFinData(String ticker) {
@@ -73,29 +78,21 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
             writer.write(String.join(",", headers.keySet()));
             writer.newLine();
             for (Map.Entry<Double, CompanyData> companyData2 : sortedHashMap.entrySet()) {
-                String line = String.format("%s,%s,%s,%s,%s",
+                String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
                         companyData2.getValue().getTicker(),
                         companyData2.getKey(),
                         companyData2.getValue().getCurrentPrice(),
                         NumberFormatterService.formatNumber(companyData2.getValue().getMarketCapitalization()),
-                        NumberFormatterService.formatNumber(companyData2.getValue().getTotalSharesOutstanding()));
+                        NumberFormatterService.formatNumber(companyData2.getValue().getTotalSharesOutstanding()),
+                        NumberFormatterService.formatNumber(companyData2.getValue().getTotalRevenue()),
+                        NumberFormatterService.formatNumber(companyData2.getValue().getRevenueGrowth()),
+                        NumberFormatterService.formatNumber(companyData2.getValue().getEbitdaMargins()),
+                        NumberFormatterService.formatNumber(companyData2.getValue().getDebtToEquity()),
+                        NumberFormatterService.formatNumber(companyData2.getValue().getFreeCashFlowMargin()));
                 writer.write(line);
                 writer.newLine();
             }
             writer.close();
-
-//            int i = 0;
-//            String[] top5 = new String[5];
-//            Iterator<Map.Entry<Double, CompanyData>> iterator = sortedHashMap.entrySet().iterator();
-//            while (iterator.hasNext() && i < 5) {
-//
-//                Map.Entry<Double, CompanyData> entry = iterator.next();
-////                String key = entry.getKey();
-////                String value = entry.getValue();
-//                top5[i] = entry.getValue().getTicker();
-//                i++;
-//            }
-//            return top5;
             return update();
 
         } catch (IOException e) {
