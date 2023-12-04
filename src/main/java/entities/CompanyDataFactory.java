@@ -153,9 +153,14 @@ public class CompanyDataFactory {
             return null;
         } else {
             JSONObject newObject = (JSONObject) object;
-            return (double) newObject.get("raw");
+            try {
+                return (double) newObject.get("raw");
+            } catch (ClassCastException e) {
+                long number = (long) newObject.get("raw");
+                return number * 1.0;
             }
         }
+    }
 
     public static Long validateLong(Object object) {
         if (nullCheckFinData(object)) {
