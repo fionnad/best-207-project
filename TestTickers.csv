@@ -1,1 +1,6 @@
 Ticker,Ranking Value,Current Price,Market Capitalization,Shares Outstanding,Total Revenue,Revenue Growth,EBITDA Margins,Debt/Equity Ratio,FCF Margin
+AAPL,5.820324570003777E11,191.24,3 Trillion,15 Billion,383 Billion,-0.01,0.33,199.42,0.21
+MSFT,5.103529872943886E11,374.51,2 Trillion,7 Billion,218 Billion,0.13,0.5,47.88,0.23
+AMZN,3.5178257655045636E11,147.03,1 Trillion,10 Billion,554 Billion,0.13,0.13,90.76,0.07
+GOOG,3.463469923598857E11,133.32,1 Trillion,12 Billion,297 Billion,0.11,0.32,11.14,0.24
+NVDA,2.0262028566935132E11,467.65,1 Trillion,2 Billion,44 Billion,2.06,0.49,33.15,0.31

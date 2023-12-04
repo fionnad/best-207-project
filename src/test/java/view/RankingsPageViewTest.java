@@ -23,7 +23,7 @@ class RankingsPageViewTest {
         RefreshDataAccessObject refreshDataAccessObject;
 
         try {
-            refreshDataAccessObject = new RefreshDataAccessObject("./Tickers.csv","./Tickers.txt", new CompanyDataFactory());
+            refreshDataAccessObject = new RefreshDataAccessObject("./TestTickers.csv","./TestTickers.txt", new CompanyDataFactory());
         }
         catch (
                 IOException e) {
