@@ -49,7 +49,7 @@ public class Main {
         // Initiate Refresh DAO on start
         RefreshDataAccessObject refreshDataAccessObject;
         try {
-            refreshDataAccessObject = new RefreshDataAccessObject("./Tickers.csv","./Tickers.txt", new CompanyDataFactory());
+            refreshDataAccessObject = new RefreshDataAccessObject("./Tickers2.csv","./Tickers2.txt", new CompanyDataFactory());
         }
         catch (
                 IOException e) {
