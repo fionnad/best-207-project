@@ -56,7 +56,6 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-
         RankingsPageView rankingsPageView = RankingsPageUseCaseFactory.create(viewManagerModel, refreshViewModel, refreshDataAccessObject);
         SearchCompanyView searchCompanyView = new SearchCompanyView(searchCompanyViewModel);
         ExplainUseCaseView explainUseCaseView = new ExplainUseCaseView(explainUseCaseViewModel);
