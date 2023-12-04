@@ -112,7 +112,7 @@ public class RefreshDataAccessObject implements RefreshDataAccessInterface {
             String row;
             int i = 0;
             ArrayList<String[]> top5 = new ArrayList<>();
-            while ((row = reader.readLine()) != null | i < 5) {
+            while ((row = reader.readLine()) != null) {
                 String[] companystuff = row.split(",");
                 top5.add(companystuff);
 
