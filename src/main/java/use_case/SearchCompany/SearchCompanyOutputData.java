@@ -21,11 +21,11 @@ public class SearchCompanyOutputData {
     public String companyFreeCashFlowPerShareComment;
     public String companyFreeCashFlowYield;
     public String companyFreeCashFlowYieldComment;
-    public String companyEarningsDate; // Updated variable name for earnings date
-    public String companyDividendDate; // Updated variable name for dividend date
-    public String companyExDividendDate; // Updated variable name for ex-dividend date
-    public String companyCurrentPrice; // Added variable for current price
-    public String companyTotalSharesOutstanding; // Added variable for total shares outstanding
+    public String companyEarningsDate;
+    public String companyDividendDate;
+    public String companyExDividendDate;
+    public String companyCurrentPrice;
+    public String companyTotalSharesOutstanding;
     public String companyMarketCapitalization;
 
     public SearchCompanyOutputData(CompanyData companyFinancialData) {

@@ -7,6 +7,7 @@ import interface_adapter.SearchCompany.SearchCompanyViewModel;
 import view.Utilities.LabelTextPanel;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -104,41 +105,67 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
         if (state.getCompanyFrontEndState().equals("Search Complete")) {
             JPanel financialDataPanel = new JPanel(new GridBagLayout());
             JPanel contentPanel = new JPanel(new GridBagLayout());
+            EmptyBorder labelInsetsAll = new EmptyBorder(5, 5, 5, 5);
 
             // Top Left Box, contains basic information about the company
             GridBagConstraints basicInfoBox = new GridBagConstraints();
             basicInfoBox.gridx = 0;
-            basicInfoBox.gridy = GridBagConstraints.RELATIVE;
-            basicInfoBox.anchor = GridBagConstraints.NORTHWEST;
-            basicInfoBox.weightx = 0.4;
+            basicInfoBox.gridy = 0;
+            basicInfoBox.anchor = GridBagConstraints.CENTER;
+            basicInfoBox.weightx = 1;
+            basicInfoBox.weighty = 0.85;
             basicInfoBox.insets = new Insets(10, 10, 10, 10);
-            JLabel currentTime = createLabelWithText("True As Of", state.getCompanyDataFetchTime());
+
+            // Top right box, contains information about important past and upcoming dates
+            GridBagConstraints datesBox = new GridBagConstraints();
+            datesBox.gridx = 1;
+            datesBox.gridy = 0;
+            datesBox.anchor = GridBagConstraints.CENTER;
+            datesBox.weightx = 0.5;
+            datesBox.insets = new Insets(10, 10, 10, 10);
+
+            // Middle Box, contains basic metrics about the company
+            GridBagConstraints metricsBox = new GridBagConstraints();
+            metricsBox.gridx = 0; // Column 1
+            metricsBox.gridy = 1; // Row 2
+            metricsBox.gridwidth = 2; // Span two columns
+            metricsBox.anchor = GridBagConstraints.CENTER;
+            metricsBox.weightx = 1.0; // Full width
+            metricsBox.insets = new Insets(10, 10, 10, 10);
+
+            // Bottom Box, contains additional company metrics
+            GridBagConstraints additionalMetricsBox = new GridBagConstraints();
+            additionalMetricsBox.gridx = 0;
+            additionalMetricsBox.gridy = 2;
+            additionalMetricsBox.gridwidth = 2;
+            additionalMetricsBox.anchor = GridBagConstraints.CENTER;
+            additionalMetricsBox.weightx = 1.0;
+            additionalMetricsBox.insets = new Insets(10, 10, 10, 10);
+
+            // Updating Top Left Box (basicInfoBox)
             JLabel currentPrice = createLabelWithText("Current Price", state.getCompanyCurrentPrice());
+            currentPrice.setBorder(labelInsetsAll);
             JLabel totalSharesOutstanding = createLabelWithText("Total Shares Outstanding", state.getCompanyTotalSharesOutstanding());
-            JLabel marketCapitlization = createLabelWithText("Market Capitalization", state.getCompanyMarketCapitalization());
+            totalSharesOutstanding.setBorder(labelInsetsAll);
+            JLabel marketCapitalization = createLabelWithText("Market Capitalization", state.getCompanyMarketCapitalization());
+            marketCapitalization.setBorder(labelInsetsAll);
 
             JPanel basicInfoPanel = new JPanel(new GridLayout(0, 1));
             basicInfoPanel.setBorder(BorderFactory.createTitledBorder("Basic Company Information"));
             TitledBorder titledBorderInfo = (TitledBorder) basicInfoPanel.getBorder();
             titledBorderInfo.setTitleJustification(TitledBorder.CENTER);
 
-            basicInfoPanel.add(currentTime);
             basicInfoPanel.add(currentPrice);
             basicInfoPanel.add(totalSharesOutstanding);
-            basicInfoPanel.add(marketCapitlization);
+            basicInfoPanel.add(marketCapitalization);
 
-            // Top right box, contains information about important past and upcoming dates
-            GridBagConstraints datesBox = new GridBagConstraints();
-            datesBox.gridx = 1;
-            datesBox.gridy = GridBagConstraints.RELATIVE;
-            datesBox.anchor = GridBagConstraints.NORTHWEST;
-            datesBox.weightx = 0.6;
-            datesBox.insets = new Insets(10, 10, 10, 10);
-
-            // Fill datesBox with date-related information
-            JLabel earningsDateLabel = createLabelWithText("Earnings Date", state.getEarningsDate());
-            JLabel exDividendDateLabel = createLabelWithText("Ex-Dividend Date", state.getExDividendDate());
-            JLabel dividendDateLabel = createLabelWithText("Dividend Date", state.getDividendDate());
+            // Updating Top Right Box (datesBox)
+            JLabel earningsDateLabel = createLabelWithText("Next Earnings Release", state.getEarningsDate());
+            earningsDateLabel.setBorder(labelInsetsAll);
+            JLabel exDividendDateLabel = createLabelWithText("Previous Dividend Release", state.getExDividendDate());
+            exDividendDateLabel.setBorder(labelInsetsAll);
+            JLabel dividendDateLabel = createLabelWithText("Closest Dividend Release", state.getDividendDate());
+            dividendDateLabel.setBorder(labelInsetsAll);
 
             JPanel datesPanel = new JPanel(new BorderLayout());
             datesPanel.setBorder(BorderFactory.createTitledBorder("Important Dates"));
@@ -148,14 +175,70 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
             datesInfoPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
             datesInfoPanel.add(earningsDateLabel);
-            datesInfoPanel.add(exDividendDateLabel);
             datesInfoPanel.add(dividendDateLabel);
+            datesInfoPanel.add(exDividendDateLabel);
 
             datesPanel.add(datesInfoPanel, BorderLayout.CENTER);
 
-            // Add basicInfoPanel and datesPanel to the content panel
+            // Updating Middle Box (metricsBox)
+            JLabel ebitdaMarginLabel = createLabelWithText("EBITDA Margin", state.getCompanyEbitdaMargin());
+            ebitdaMarginLabel.setBorder(labelInsetsAll);
+            JLabel ebitdaMarginCommentLabel = createLabelWithText("Comment", state.getCompanyEbitdaMarginComment());
+            ebitdaMarginCommentLabel.setBorder(labelInsetsAll);
+
+            JLabel debtToEquityLabel = createLabelWithText("Debt to Equity", state.getCompanyDebtToEquity());
+            debtToEquityLabel.setBorder(labelInsetsAll);
+            JLabel debtToEquityCommentLabel = createLabelWithText("Comment", state.getCompanyDebtToEquityComment());
+            debtToEquityCommentLabel.setBorder(labelInsetsAll);
+
+            JLabel revenueGrowthLabel = createLabelWithText("Revenue Growth", state.getCompanyRevenueGrowth());
+            revenueGrowthLabel.setBorder(labelInsetsAll);
+            JLabel revenueGrowthCommentLabel = createLabelWithText("Comment", state.getCompanyRevenueGrowthComment());
+            revenueGrowthCommentLabel.setBorder(labelInsetsAll);
+
+            JPanel metricsPanel = new JPanel(new GridLayout(0, 1));
+            metricsPanel.setBorder(BorderFactory.createTitledBorder("Company Metrics"));
+            TitledBorder titledBorderMetrics = (TitledBorder) metricsPanel.getBorder();
+            titledBorderMetrics.setTitleJustification(TitledBorder.CENTER);
+
+            metricsPanel.add(ebitdaMarginLabel);
+            metricsPanel.add(ebitdaMarginCommentLabel);
+            metricsPanel.add(debtToEquityLabel);
+            metricsPanel.add(debtToEquityCommentLabel);
+            metricsPanel.add(revenueGrowthLabel);
+            metricsPanel.add(revenueGrowthCommentLabel);
+
+            // Updating Bottom Box
+            JLabel freeCashFlowMarginLabel = createLabelWithText("FCF Margin", state.getCompanyFreeCashFlowMargin());
+            freeCashFlowMarginLabel.setBorder(labelInsetsAll);
+            JLabel freeCashFlowMarginCommentLabel = createLabelWithText("FCF Comments", state.getCompanyFreeCashFlowMarginComment());
+            freeCashFlowMarginCommentLabel.setBorder(labelInsetsAll);
+            JLabel freeCashFlowPerShareLabel = createLabelWithText("FCF Per Share", state.getCompanyFreeCashFlowPerShare());
+            freeCashFlowPerShareLabel.setBorder(labelInsetsAll);
+            JLabel freeCashFlowPerShareCommentLabel = createLabelWithText("FCF Comment", state.getCompanyFreeCashFlowPerShareComment());
+            freeCashFlowPerShareCommentLabel.setBorder(labelInsetsAll);
+            JLabel freeCashFlowYieldLabel = createLabelWithText("FCF Yield", state.getCompanyFreeCashFlowYield());
+            freeCashFlowYieldLabel.setBorder(labelInsetsAll);
+            JLabel freeCashFlowYieldCommentLabel = createLabelWithText("FCF Comment", state.getCompanyFreeCashFlowYieldComment());
+            freeCashFlowYieldCommentLabel.setBorder(labelInsetsAll);
+
+            JPanel additionalMetricsPanel = new JPanel(new GridLayout(0, 1));
+            additionalMetricsPanel.setBorder(BorderFactory.createTitledBorder("Free Cash Flow Analysis"));
+            TitledBorder titledBorderAdditionalMetrics = (TitledBorder) additionalMetricsPanel.getBorder();
+            titledBorderAdditionalMetrics.setTitleJustification(TitledBorder.CENTER);
+
+            additionalMetricsPanel.add(freeCashFlowMarginLabel);
+            additionalMetricsPanel.add(freeCashFlowMarginCommentLabel);
+            additionalMetricsPanel.add(freeCashFlowPerShareLabel);
+            additionalMetricsPanel.add(freeCashFlowPerShareCommentLabel);
+            additionalMetricsPanel.add(freeCashFlowYieldLabel);
+            additionalMetricsPanel.add(freeCashFlowYieldCommentLabel);
+
+            // Adding all panels to main panel
             contentPanel.add(basicInfoPanel, basicInfoBox);
             contentPanel.add(datesPanel, datesBox);
+            contentPanel.add(metricsPanel, metricsBox);
+            contentPanel.add(additionalMetricsPanel, additionalMetricsBox);
             financialDataPanel.add(contentPanel);
 
             // Reflecting changes to the Front End
