@@ -14,13 +14,9 @@ public class RefreshInteractor {
     public void execute() {
       
         ArrayList<String[]> tickers = refreshDataAccessObject.refresh();
-        if (tickers != null) {
-            LocalDateTime now = LocalDateTime.now();
-            RefreshOutputData refreshOutputData = new RefreshOutputData(now.toString(), tickers);
-            refreshOutputBoundary.prepareSuccessView(refreshOutputData);
-        } else {
-            refreshOutputBoundary.prepareFailView();
+        LocalDateTime now = LocalDateTime.now();
+        RefreshOutputData refreshOutputData = new RefreshOutputData(now.toString(), tickers);
+        refreshOutputBoundary.prepareSuccessView(refreshOutputData);
 
-        }
     }
 }
