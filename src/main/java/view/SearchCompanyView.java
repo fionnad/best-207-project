@@ -101,7 +101,6 @@ public class SearchCompanyView extends JPanel implements ActionListener, Propert
         // Updating informationPresentedPanel with new company information
         informationPresentedPanel.removeAll();
         SearchCompanyState state = (SearchCompanyState) e.getNewValue();
-        System.out.println(state.getCompanyFrontEndState());
         if (state.getCompanyFrontEndState().equals("Search Complete")) {
             JPanel financialDataPanel = new JPanel(new GridBagLayout());
             JPanel contentPanel = new JPanel(new GridBagLayout());
